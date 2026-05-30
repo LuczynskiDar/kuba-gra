@@ -150,7 +150,7 @@ serve stage  → nginx:alpine → kopiuje dist/
 3. [x] Implementacja routingu i stron (szkielety)
 4. [x] Logika gry w `useGame.ts`
 5. [x] Komponent `HangmanSVG.tsx` (8 kroków SVG)
-6. [ ] Komponent `WordDisplay` i `Keyboard`
+6. [x] Komponent `WordDisplay` i `Keyboard`
 7. [ ] Tryb 1 gracz — end-to-end
 8. [ ] Tryb 2 graczy — mechanika zmian
 9. [ ] Ekran podsumowania

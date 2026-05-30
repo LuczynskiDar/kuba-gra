@@ -1,0 +1,64 @@
+.word-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.word-category {
+  font-size: 1rem;
+  color: #aaa;
+  letter-spacing: 0.05em;
+}
+
+.word-category strong {
+  color: #f0c040;
+  text-transform: capitalize;
+}
+
+.word-letters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.letter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36px;
+}
+
+.letter-char {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  min-height: 2.2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  line-height: 1;
+}
+
+.letter-line {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #aaaaaa;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.letter-box.revealed .letter-line {
+  background-color: #4A90D9;
+}
+
+/* litery nieodgadnięte pokazane po przegranej */
+.letter-box.missed .letter-char {
+  color: #e74c3c;
+}
+
+.letter-box.missed .letter-line {
+  background-color: #e74c3c;
+}
