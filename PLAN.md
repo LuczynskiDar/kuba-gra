@@ -148,8 +148,8 @@ serve stage  → nginx:alpine → kopiuje dist/
 1. [x] Wygenerowanie pliku `words.json` (200 słów PL)
 2. [x] Inicjalizacja projektu React + TS (Vite)
 3. [x] Implementacja routingu i stron (szkielety)
-4. [ ] Logika gry w `useGame.ts`
-5. [ ] Komponent `HangmanSVG.tsx` (8 kroków SVG)
+4. [x] Logika gry w `useGame.ts`
+5. [x] Komponent `HangmanSVG.tsx` (8 kroków SVG)
 6. [ ] Komponent `WordDisplay` i `Keyboard`
 7. [ ] Tryb 1 gracz — end-to-end
 8. [ ] Tryb 2 graczy — mechanika zmian
