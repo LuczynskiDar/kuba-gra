@@ -13,7 +13,7 @@ export default function GamePage() {
   const mode = (location.state?.mode ?? '1player') as GameMode
   const initialized = useRef(false)
 
-  const { turnState, turnStatus, phase, startGame, guessLetter, nextTurn } = useGame()
+  const { turnState, turnStatus, phase, startGame, guessLetter, nextTurn, resumeAfterSwitch } = useGame()
 
   useEffect(() => {
     if (!initialized.current) {
@@ -32,9 +32,30 @@ export default function GamePage() {
 
   if (!turnState) return null
 
+  // Ekran zmiany gracza — zasłania planszę między turami w trybie 2 graczy
+  if (phase === 'player-switch') {
+    return (
+      <div className="game-page">
+        <div className="player-switch">
+          <div className="player-switch__card">
+            <p className="player-switch__label">Zmiana gracza!</p>
+            <h2 className="player-switch__title">
+              Teraz czas na Gracza <span>{turnState.currentPlayer}</span>
+            </h2>
+            <p className="player-switch__hint">
+              Runda {turnState.currentRound} / 3
+            </p>
+            <button className="btn-next" onClick={resumeAfterSwitch}>
+              Zaczynam! →
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const isRoundOver = turnStatus !== 'playing'
   const isTwoPlayer = mode === '2players'
-
   const totalTurns = isTwoPlayer ? 6 : 3
   const isLastTurn = turnState.roundResults.length === totalTurns - 1 && isRoundOver
 

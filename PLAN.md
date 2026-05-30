@@ -152,7 +152,7 @@ serve stage  → nginx:alpine → kopiuje dist/
 5. [x] Komponent `HangmanSVG.tsx` (8 kroków SVG)
 6. [x] Komponent `WordDisplay` i `Keyboard`
 7. [x] Tryb 1 gracz — end-to-end
-8. [ ] Tryb 2 graczy — mechanika zmian
+8. [x] Tryb 2 graczy — mechanika zmian
 9. [ ] Ekran podsumowania
 10. [ ] Tło sali kinowej (CSS / SVG)
 11. [ ] Dźwięki (opcjonalnie)

@@ -113,6 +113,50 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* === Ekran zmiany gracza === */
+.player-switch {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.player-switch__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 56px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.player-switch__label {
+  font-size: 1rem;
+  color: #aaa;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.player-switch__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.player-switch__title span {
+  color: #f0c040;
+}
+
+.player-switch__hint {
+  font-size: 0.95rem;
+  color: #888;
+}
+
 /* === Responsive === */
 @media (max-width: 640px) {
   .game-main {

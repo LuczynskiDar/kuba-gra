@@ -13,7 +13,7 @@ function pickRandomWord(usedWords: string[]): Word {
 }
 
 export type TurnStatus = 'playing' | 'won' | 'lost'
-export type GamePhase = 'idle' | 'playing' | 'finished'
+export type GamePhase = 'idle' | 'playing' | 'player-switch' | 'finished'
 
 export interface GameTurnState {
   mode: GameMode
@@ -36,6 +36,7 @@ export interface UseGameReturn {
   startGame: (mode: GameMode) => void
   guessLetter: (letter: string) => void
   nextTurn: () => void
+  resumeAfterSwitch: () => void
 }
 
 export function useGame(): UseGameReturn {
@@ -116,6 +117,8 @@ export function useGame(): UseGameReturn {
 
     const nextWord = pickRandomWord(turnState.usedWords)
 
+    const switchingToPlayer2 = isTwoPlayer && turnState.playerTurnInRound === 1
+
     setTurnState({
       ...turnState,
       currentRound: nextRound,
@@ -129,7 +132,12 @@ export function useGame(): UseGameReturn {
       usedWords: [...turnState.usedWords, nextWord.word],
     })
     setTurnStatus('playing')
+    setPhase(switchingToPlayer2 ? 'player-switch' : 'playing')
   }, [turnState, turnStatus])
 
-  return { turnState, turnStatus, phase, startGame, guessLetter, nextTurn }
+  const resumeAfterSwitch = useCallback(() => {
+    setPhase('playing')
+  }, [])
+
+  return { turnState, turnStatus, phase, startGame, guessLetter, nextTurn, resumeAfterSwitch }
 }
