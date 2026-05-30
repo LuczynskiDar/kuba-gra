@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import './ModePage.css'
 
 export default function ModePage() {
   const navigate = useNavigate()
@@ -10,8 +11,10 @@ export default function ModePage() {
   return (
     <div className="mode-page">
       <h2>Wybierz tryb gry</h2>
-      <button onClick={() => startGame('1player')}>1 Gracz</button>
-      <button onClick={() => startGame('2players')}>2 Graczy</button>
+      <div className="mode-buttons">
+        <button className="mode-btn" onClick={() => startGame('1player')}>1 Gracz</button>
+        <button className="mode-btn" onClick={() => startGame('2players')}>2 Graczy</button>
+      </div>
     </div>
   )
 }

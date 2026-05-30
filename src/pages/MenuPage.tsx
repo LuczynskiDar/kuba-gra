@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import './MenuPage.css'
 
 export default function MenuPage() {
   const navigate = useNavigate()

@@ -1,0 +1,36 @@
+.menu-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  text-align: center;
+  padding: 24px;
+}
+
+.menu-page h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 40px rgba(74, 144, 217, 0.5);
+}
+
+.menu-page button {
+  padding: 16px 52px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  background: #4A90D9;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 4px 20px rgba(74, 144, 217, 0.4);
+}
+
+.menu-page button:hover {
+  background: #357abd;
+  transform: translateY(-3px);
+}

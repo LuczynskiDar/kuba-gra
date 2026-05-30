@@ -154,7 +154,7 @@ serve stage  → nginx:alpine → kopiuje dist/
 7. [x] Tryb 1 gracz — end-to-end
 8. [x] Tryb 2 graczy — mechanika zmian
 9. [x] Ekran podsumowania
-10. [ ] Tło sali kinowej (CSS / SVG)
+10. [x] Tło sali kinowej (CSS / SVG)
 11. [ ] Dźwięki (opcjonalnie)
 12. [ ] Testy lokalne
 13. [ ] Dockerfile + docker-compose

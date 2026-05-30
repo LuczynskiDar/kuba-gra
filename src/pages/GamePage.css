@@ -2,7 +2,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(ellipse at top, #1a1a3e 0%, #0d0d1a 100%);
 }
 
 /* === Header === */
