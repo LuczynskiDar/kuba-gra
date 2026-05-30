@@ -36,7 +36,25 @@
 }
 
 .menu-authors {
-  font-size: 0.95rem;
-  color: #666;
-  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #c8a050;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.menu-authors::before,
+.menu-authors::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c8a050);
+}
+
+.menu-authors::after {
+  background: linear-gradient(to left, transparent, #c8a050);
 }
