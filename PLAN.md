@@ -8,14 +8,15 @@ Język polski. Styl kreskówkowy/neutralny.
 
 ## Stack technologiczny
 
-| Element       | Wybór                          |
-|---------------|-------------------------------|
-| Frontend      | React + TypeScript             |
-| Routing       | React Router                   |
-| Grafika       | SVG (wisielec), CSS (tło)      |
-| Dźwięki       | opcjonalne, jako dodatek       |
-| Deployment    | Docker na VPS                  |
-| Środowisko dev| lokalnie najpierw, potem VPS   |
+| Element        | Wybór                                              |
+|----------------|----------------------------------------------------|
+| Frontend       | React + TypeScript                                 |
+| Routing        | React Router                                       |
+| Grafika        | SVG (wisielec), CSS (tło)                          |
+| Dźwięki        | opcjonalne, jako dodatek                           |
+| Deployment     | Docker na VPS                                      |
+| Środowisko dev | lokalnie najpierw, potem VPS                       |
+| Repozytorium   | GitHub — `LuczynskiDar/kuba-gra`                   |
 
 ---
 
@@ -134,9 +135,17 @@ serve stage  → nginx:alpine → kopiuje dist/
 
 ---
 
+## Git workflow
+
+- Branch główny: `main`
+- Pracujemy na feature branchach, PR do `main`
+- Remote: `git@github.com:LuczynskiDar/kuba-gra.git`
+
+---
+
 ## Kolejne kroki (w kolejności)
 
-1. [ ] Wygenerowanie pliku `words.json` (200 słów PL)
+1. [x] Wygenerowanie pliku `words.json` (200 słów PL)
 2. [ ] Inicjalizacja projektu React + TS (Vite)
 3. [ ] Implementacja routingu i stron (szkielety)
 4. [ ] Logika gry w `useGame.ts`
