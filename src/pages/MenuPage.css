@@ -34,3 +34,9 @@
   background: #357abd;
   transform: translateY(-3px);
 }
+
+.menu-authors {
+  font-size: 0.95rem;
+  color: #666;
+  letter-spacing: 0.04em;
+}

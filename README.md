@@ -1,5 +1,7 @@
-# kuba-gra
-Gra w wisielca zrobiona z Kuba Figurą
+# Wisielec — Gra Kuby i Darka
+
+Przeglądarkowa gra edukacyjna w wisielca dla dzieci z drugiej klasy.
+Stworzona przez Kubę i Darka.
 
 ## Uruchamianie lokalne
 
@@ -22,3 +24,13 @@ npm run preview
 ```bash
 docker compose up -d
 ```
+
+Aplikacja dostępna pod `http://localhost:3000`
+
+## Stack
+
+- React + TypeScript (Vite)
+- React Router
+- SVG wisielec, sala kinowa w tle
+- 200 słów po polsku (4 kategorie)
+- Tryb 1 i 2 graczy, 3 rundy

@@ -1,0 +1,7 @@
+services:
+  kuba-gra:
+    build: .
+    container_name: kuba-gra
+    restart: unless-stopped
+    ports:
+      - "3000:80"

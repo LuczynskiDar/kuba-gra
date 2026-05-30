@@ -8,6 +8,7 @@ export default function MenuPage() {
     <div className="menu-page">
       <h1>Wisielec</h1>
       <button onClick={() => navigate('/mode')}>Zagraj</button>
+      <p className="menu-authors">Gra Kuby i Darka</p>
     </div>
   )
 }
