@@ -1,0 +1,51 @@
+.statki-layout {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.statki-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, #0a3a5c 0%, transparent 60%),
+    linear-gradient(180deg,
+      #051e35 0%,
+      #0a3a5c 30%,
+      #0d5080 55%,
+      #0a6694 70%,
+      #085070 85%,
+      #063a52 100%
+    );
+}
+
+/* Fale na dole */
+.statki-bg::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 180px;
+  background: radial-gradient(ellipse at 50% 100%, #0a6694 0%, transparent 70%);
+  border-radius: 50% 50% 0 0 / 80px 80px 0 0;
+  opacity: 0.6;
+}
+
+.statki-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 100px;
+  background: rgba(5, 50, 80, 0.7);
+  border-radius: 50% 50% 0 0 / 50px 50px 0 0;
+}
+
+.statki-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}

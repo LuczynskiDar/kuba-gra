@@ -5,6 +5,10 @@ import WisielecMenuPage from './pages/wisielec/MenuPage'
 import ModePage from './pages/wisielec/ModePage'
 import GamePage from './pages/wisielec/GamePage'
 import SummaryPage from './pages/wisielec/SummaryPage'
+import StatkiLayout from './pages/statki/StatkiLayout'
+import StatkiMenuPage from './pages/statki/MenuPage'
+import StatkiModePage from './pages/statki/ModePage'
+import StatkiSetupPage from './pages/statki/SetupPage'
 import './App.css'
 
 function App() {
@@ -17,6 +21,12 @@ function App() {
         <Route path="/wisielec/mode" element={<ModePage />} />
         <Route path="/wisielec/game" element={<GamePage />} />
         <Route path="/wisielec/summary" element={<SummaryPage />} />
+      </Route>
+
+      <Route element={<StatkiLayout />}>
+        <Route path="/statki" element={<StatkiMenuPage />} />
+        <Route path="/statki/mode" element={<StatkiModePage />} />
+        <Route path="/statki/setup" element={<StatkiSetupPage />} />
       </Route>
     </Routes>
   )
