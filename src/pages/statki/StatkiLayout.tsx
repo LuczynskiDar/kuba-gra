@@ -61,6 +61,11 @@ export default function StatkiLayout() {
               <stop offset="0%"   stopColor="#7a5028"/>
               <stop offset="100%" stopColor="#4e2c0c"/>
             </linearGradient>
+            <linearGradient id="floor-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#06101e" stopOpacity="0"/>
+              <stop offset="40%"  stopColor="#080e18" stopOpacity="0.75"/>
+              <stop offset="100%" stopColor="#060c14" stopOpacity="1"/>
+            </linearGradient>
           </defs>
 
           {/* SKY */}
@@ -266,104 +271,111 @@ export default function StatkiLayout() {
             <circle cx="12" cy="550" r="1"   fill="#fff" opacity="0.9"/>
           </g>
 
-          {/* ── OCTOPUS — y≈545, animated drift ── */}
+          {/* ── OCTOPUS — head y=470, tentacles to y=635 ── */}
           <g className="ocean-octopus-1">
-            {/* Tentacles (8) — tips at y≤740 */}
-            <path d="M900 580 C878 602 860 634 852 672 C844 702 850 720 842 740" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
-            <path d="M900 580 C885 606 876 642 880 678 C884 708 876 724 872 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 580 C898 610 898 646 902 680 C906 710 900 726 898 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 580 C915 604 924 640 920 676 C916 706 924 722 928 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 580 C922 600 942 634 950 672 C958 702 952 720 960 740" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
-            <path d="M892 582 C876 598 864 615 852 628" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
-            <path d="M900 583 C898 600 895 618 892 632" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
-            <path d="M908 582 C924 598 934 615 948 628" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            {/* 5 main tentacles ending at y≈635 */}
+            <path d="M900 505 C878 522 860 550 852 578 C844 604 848 622 842 638" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
+            <path d="M900 505 C886 526 878 556 882 584 C886 608 879 622 875 638" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 505 C898 528 898 560 902 588 C906 612 900 624 898 638" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 505 C914 524 922 556 918 584 C914 608 922 622 926 638" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 505 C920 520 940 550 948 578 C956 604 950 622 958 638" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
+            {/* 3 shorter front tentacles */}
+            <path d="M892 508 C877 522 866 538 856 550" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            <path d="M900 508 C898 524 895 540 893 554" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            <path d="M908 508 C923 522 932 538 944 550" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
             {/* Suction cups */}
             {([
-              [848,670],[843,698],[872,678],[874,706],[899,680],[900,708],[922,676],[930,706],[952,672],[957,702],
+              [850,577],[844,603],[874,582],[876,608],[900,585],[901,610],[922,580],[928,608],[950,577],[955,604],
             ] as [number,number][]).map(([cx,cy],i) => (
               <circle key={i} cx={cx} cy={cy} r="2.5" fill="none" stroke="#b866cc" strokeWidth="1.1" opacity="0.65"/>
             ))}
             {/* Head / mantle */}
-            <ellipse cx="900" cy="552" rx="42" ry="30" fill="url(#oct-g)"/>
-            <ellipse cx="895" cy="542" rx="24" ry="13" fill="rgba(200,110,220,0.3)"/>
+            <ellipse cx="900" cy="478" rx="42" ry="30" fill="url(#oct-g)"/>
+            <ellipse cx="895" cy="468" rx="24" ry="13" fill="rgba(200,110,220,0.3)"/>
             {/* Body */}
-            <ellipse cx="900" cy="580" rx="34" ry="21" fill="#9040b0"/>
-            <ellipse cx="895" cy="574" rx="17" ry="9"  fill="rgba(200,110,220,0.25)"/>
+            <ellipse cx="900" cy="506" rx="34" ry="21" fill="#9040b0"/>
+            <ellipse cx="895" cy="500" rx="17" ry="9"  fill="rgba(200,110,220,0.25)"/>
             {/* Eyes */}
-            <circle cx="882" cy="556" r="8.5" fill="#120820"/>
-            <circle cx="882" cy="556" r="6"   fill="#241038"/>
-            <circle cx="879.5" cy="553.5" r="2.5" fill="#fff" opacity="0.9"/>
-            <ellipse cx="882" cy="557" rx="1.8" ry="2.2" fill="#000"/>
-            <circle cx="918" cy="556" r="8.5" fill="#120820"/>
-            <circle cx="918" cy="556" r="6"   fill="#241038"/>
-            <circle cx="915.5" cy="553.5" r="2.5" fill="#fff" opacity="0.9"/>
-            <ellipse cx="918" cy="557" rx="1.8" ry="2.2" fill="#000"/>
+            <circle cx="882" cy="482" r="8.5" fill="#120820"/>
+            <circle cx="882" cy="482" r="6"   fill="#241038"/>
+            <circle cx="879.5" cy="479.5" r="2.5" fill="#fff" opacity="0.9"/>
+            <ellipse cx="882" cy="483" rx="1.8" ry="2.2" fill="#000"/>
+            <circle cx="918" cy="482" r="8.5" fill="#120820"/>
+            <circle cx="918" cy="482" r="6"   fill="#241038"/>
+            <circle cx="915.5" cy="479.5" r="2.5" fill="#fff" opacity="0.9"/>
+            <ellipse cx="918" cy="483" rx="1.8" ry="2.2" fill="#000"/>
             {/* Ink cloud */}
-            <ellipse cx="862" cy="570" rx="16" ry="10" fill="#100820" opacity="0.32"/>
-            <ellipse cx="854" cy="563" rx="10" ry="7"  fill="#100820" opacity="0.22"/>
+            <ellipse cx="862" cy="496" rx="16" ry="10" fill="#100820" opacity="0.32"/>
+            <ellipse cx="854" cy="490" rx="10" ry="7"  fill="#100820" opacity="0.22"/>
           </g>
 
           {/* BUBBLES */}
           {([
-            [220,540,5],[380,620,3],[550,468,4],[700,680,3.5],[1060,518,3],
-            [1230,640,4],[1380,584,3],[162,610,2.5],[472,570,3.5],[832,532,2.5],
+            [220,480,5],[380,555,3],[550,415,4],[700,590,3.5],[1060,460,3],
+            [1230,572,4],[1380,520,3],[162,540,2.5],[472,500,3.5],[832,468,2.5],
           ] as [number,number,number][]).map(([x,y,r],i) => (
             <circle key={i} cx={x} cy={y} r={r} fill="none" stroke="#5ab4e8"
               strokeWidth="1.2" opacity="0.4"
               className={`ocean-bubble ocean-bubble-${(i%3)+1}`}/>
           ))}
 
-          {/* SEAWEED — bottom at y=730, shifted up 80px */}
+          {/* OCEAN FLOOR — atmospheric gradient, fades in from y=570 */}
+          <rect x="0" y="570" width="1440" height="240" fill="url(#floor-g)"/>
+
+          {/* OCEAN FLOOR BASE — solid full-width strip so seaweed is grounded */}
+          <rect x="0" y="600" width="1440" height="210" fill="#0a1810"/>
+
+          {/* SEAWEED — roots at y=615, tops at ~y=480 */}
           {[155,330,565,750,1010,1190,1380].map((x,i) => (
             <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
-              <path d={`M${x} 730 Q${x-20} 688 ${x} 656 Q${x+20} 626 ${x} 594`}
+              <path d={`M${x} 615 Q${x-20} 580 ${x} 552 Q${x+20} 524 ${x} 496`}
                 stroke="#187228" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
-              <path d={`M${x} 730 Q${x+17} 685 ${x+6} 652`}
+              <path d={`M${x} 615 Q${x+17} 576 ${x+6} 546`}
                 stroke="#269834" strokeWidth="4" fill="none" strokeLinecap="round"/>
-              <path d={`M${x+9} 730 Q${x-8} 698 ${x+4} 674 Q${x+18} 650 ${x+9} 628`}
+              <path d={`M${x+9} 615 Q${x-8} 586 ${x+4} 562 Q${x+18} 538 ${x+9} 514`}
                 stroke="#125c20" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
             </g>
           ))}
 
-          {/* STARFISH — shifted up 80px */}
-          <g transform="translate(308,710) rotate(14)">
+          {/* STARFISH — on the floor at y≈604 */}
+          <g transform="translate(308,604) rotate(14)">
             <polygon points="0,-20 4.4,-7 18,-6.4 7,2.2 11,16.4 0,8.2 -11,16.4 -7,2.2 -18,-6.4 -4.4,-7"
               fill="#d03a18" stroke="#ee5830" strokeWidth="1"/>
             {[0,-12,7,8,-7,8,11,-3.5,-11,-3.5].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="2.2" fill="#f06038" opacity="0.6"/>)}
             <circle cx="0" cy="0" r="4.5" fill="#b02810"/>
           </g>
-          <g transform="translate(738,716) rotate(-22)">
+          <g transform="translate(738,608) rotate(-22)">
             <polygon points="0,-16 3.5,-5.5 14.4,-4.8 5.6,1.6 8.8,12.8 0,6.4 -8.8,12.8 -5.6,1.6 -14.4,-4.8 -3.5,-5.5"
               fill="#7a2890" stroke="#9a44b0" strokeWidth="1"/>
             {[0,-9,6,6,-6,6,9,-3,-9,-3].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="1.8" fill="#b060c8" opacity="0.6"/>)}
             <circle cx="0" cy="0" r="3.5" fill="#5a1870"/>
           </g>
-          <g transform="translate(1155,712) rotate(6)">
+          <g transform="translate(1155,605) rotate(6)">
             <polygon points="0,-22 4.8,-7.6 20.2,-6.6 7.8,2.4 12.2,17.6 0,9 -12.2,17.6 -7.8,2.4 -20.2,-6.6 -4.8,-7.6"
               fill="#df5e0e" stroke="#f07e2e" strokeWidth="1"/>
             {[0,-13,8,9,-8,9,12,-4,-12,-4].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="2.5" fill="#f08838" opacity="0.55"/>)}
             <circle cx="0" cy="0" r="5" fill="#b03c08"/>
           </g>
-          <g transform="translate(1348,720) rotate(-34)">
+          <g transform="translate(1348,610) rotate(-34)">
             <polygon points="0,-13 2.8,-4.5 12,-4 4.7,1.5 7.2,10 0,5.2 -7.2,10 -4.7,1.5 -12,-4 -2.8,-4.5"
               fill="#c83868" stroke="#e85898" strokeWidth="0.8"/>
             <circle cx="0" cy="0" r="3" fill="#a01e50"/>
           </g>
 
-          {/* OCEAN FLOOR ROCKS — shifted up 80px */}
-          <ellipse cx="316"  cy="728" rx="90"  ry="16" fill="#08182e"/>
-          <ellipse cx="316"  cy="723" rx="74"  ry="11" fill="#0a2038"/>
-          <ellipse cx="718"  cy="729" rx="135" ry="18" fill="#060f1e"/>
-          <ellipse cx="718"  cy="724" rx="114" ry="12" fill="#081828"/>
-          <ellipse cx="1148" cy="728" rx="100" ry="16" fill="#08182e"/>
-          <ellipse cx="1148" cy="723" rx="82"  ry="11" fill="#0a2038"/>
-          <ellipse cx="1388" cy="729" rx="75"  ry="15" fill="#060f1e"/>
-          <ellipse cx="478"  cy="726" rx="32" ry="8"  fill="#0a1c30"/>
-          <ellipse cx="896"  cy="728" rx="24" ry="6"  fill="#08182a"/>
-          <ellipse cx="1018" cy="726" rx="20" ry="5"  fill="#0a1c30"/>
+          {/* OCEAN FLOOR ROCKS — algae-green tint keeps hue on any color profile */}
+          <ellipse cx="316"  cy="620" rx="90"  ry="17" fill="#1a3024"/>
+          <ellipse cx="316"  cy="613" rx="76"  ry="12" fill="#224030"/>
+          <ellipse cx="718"  cy="621" rx="138" ry="19" fill="#182c20"/>
+          <ellipse cx="718"  cy="614" rx="116" ry="13" fill="#203a28"/>
+          <ellipse cx="1148" cy="620" rx="102" ry="17" fill="#1a3024"/>
+          <ellipse cx="1148" cy="613" rx="84"  ry="12" fill="#224030"/>
+          <ellipse cx="1388" cy="621" rx="76"  ry="16" fill="#182c20"/>
+          <ellipse cx="478"  cy="618" rx="34"  ry="9"  fill="#1c3222"/>
+          <ellipse cx="896"  cy="620" rx="26"  ry="7"  fill="#1a3024"/>
+          <ellipse cx="1018" cy="618" rx="22"  ry="6"  fill="#1c3222"/>
         </svg>
 
         {/* ── MOBILE / PORTRAIT (≤639px) ── viewBox 400×860 */}
@@ -526,6 +538,9 @@ export default function StatkiLayout() {
               className={`ocean-bubble ocean-bubble-${(i%3)+1}`}/>
           ))}
 
+          {/* Mobile floor base — full-width so seaweed is grounded */}
+          <rect x="0" y="838" width="400" height="22" fill="#0a1810"/>
+
           {/* Mobile seaweed */}
           {[60,150,240,330].map((x,i) => (
             <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
@@ -548,10 +563,10 @@ export default function StatkiLayout() {
             <circle cx="0" cy="0" r="3.2" fill="#5a1870"/>
           </g>
 
-          {/* Mobile ocean floor */}
-          <ellipse cx="100" cy="858" rx="90"  ry="14" fill="#08182e"/>
-          <ellipse cx="290" cy="860" rx="120" ry="16" fill="#060f1e"/>
-          <ellipse cx="370" cy="858" rx="50"  ry="12" fill="#08182e"/>
+          {/* Mobile ocean floor rocks */}
+          <ellipse cx="100" cy="858" rx="90"  ry="14" fill="#1a3024"/>
+          <ellipse cx="290" cy="860" rx="120" ry="16" fill="#182c20"/>
+          <ellipse cx="370" cy="858" rx="50"  ry="12" fill="#1a3024"/>
         </svg>
 
       </div>
