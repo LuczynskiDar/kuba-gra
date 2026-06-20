@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './HandoverScreen.css'
 
 interface HandoverScreenProps {
@@ -19,7 +20,7 @@ export default function HandoverScreen({ playerName, onReady }: HandoverScreenPr
     return () => clearTimeout(t)
   }, [count])
 
-  return (
+  return createPortal(
     <div className="handover">
       <div className="handover__box">
         <p className="handover__label">Przekaż urządzenie</p>
@@ -29,6 +30,7 @@ export default function HandoverScreen({ playerName, onReady }: HandoverScreenPr
           : <button className="handover__btn" onClick={onReady}>Gotowy →</button>
         }
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

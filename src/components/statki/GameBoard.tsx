@@ -13,11 +13,12 @@ interface GameBoardProps {
   interactive: boolean
   lastShot: LastShot | null
   onCellClick: (row: number, col: number) => void
+  variant?: 'blue' | 'red'
 }
 
-export default function GameBoard({ title, board, shots, showShips, interactive, lastShot, onCellClick }: GameBoardProps) {
+export default function GameBoard({ title, board, shots, showShips, interactive, lastShot, onCellClick, variant = 'blue' }: GameBoardProps) {
   return (
-    <div className="game-board">
+    <div className={`game-board game-board--${variant}`}>
       <h3 className="game-board__title">{title}</h3>
       <div className={`game-board__grid${interactive ? ' game-board__grid--interactive' : ''}`}>
         <div className="game-board__corner" />

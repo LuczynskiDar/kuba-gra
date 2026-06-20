@@ -53,7 +53,43 @@
   overflow: hidden;
 }
 
-/* Own ships (player's board) */
+/* Red variant — darker warm cell backgrounds */
+.game-board--red .game-board__cell {
+  background: rgba(60, 12, 12, 0.65);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.game-board--red .game-board__title {
+  color: rgba(255, 160, 140, 0.65);
+}
+
+/* ===========================
+   BOARD VARIANTS
+   =========================== */
+
+/* Blue variant (player 1 / default) */
+.game-board--blue .game-board__cell--ship {
+  background: #1e5c80;
+  border-color: #3a8ab0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.game-board--blue.game-board__grid--interactive .game-board__cell--target:hover,
+.game-board--blue .game-board__grid--interactive .game-board__cell--target:hover {
+  background: rgba(26, 120, 190, 0.45);
+  border-color: #4aabdf;
+}
+
+/* Red variant (player 2 / computer) */
+.game-board--red .game-board__cell--ship {
+  background: #6e2418;
+  border-color: #a84030;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.game-board--red .game-board__grid--interactive .game-board__cell--target:hover {
+  background: rgba(190, 70, 30, 0.45);
+  border-color: #e06040;
+}
+
+/* Own ships (player's board) — fallback for unstyled variant */
 .game-board__cell--ship {
   background: #1e5c80;
   border-color: #3a8ab0;
@@ -109,10 +145,6 @@
 /* Clickable target */
 .game-board__grid--interactive .game-board__cell--target {
   cursor: crosshair;
-}
-.game-board__grid--interactive .game-board__cell--target:hover {
-  background: rgba(26, 120, 190, 0.45);
-  border-color: #4aabdf;
 }
 
 /* ===========================

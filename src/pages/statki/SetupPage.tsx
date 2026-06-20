@@ -6,33 +6,34 @@ import Board from '../../components/statki/Board'
 import HandoverScreen from '../../components/statki/HandoverScreen'
 import './SetupPage.css'
 
-interface SetupState {
+interface RouteState {
   mode: GameMode
   difficulty: Difficulty | null
   player1: string
   player2: string
-  // Set for player 2's setup phase in 2-player local mode
-  setupFor?: 'player2'
-  player1Fleet?: ShipDef[]
-  player1Board?: BoardGrid
 }
+
+type SetupPhase = 'player1' | 'handover' | 'player2'
 
 export default function StatkiSetupPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const rs = (location.state ?? {}) as SetupState
-  const { mode, difficulty, player1, player2 } = rs
-  const isPlayer2Setup = rs.setupFor === 'player2'
-  const activeName = isPlayer2Setup ? player2 : player1
+  const { mode, difficulty, player1, player2 } = (location.state ?? {}) as RouteState
 
-  const [fleet, setFleet] = useState<ShipDef[]>(makeInitialFleet)
-  const [board, setBoard] = useState<BoardGrid>(createEmptyBoard)
+  // Phase: player1 → handover → player2 (only for 2players-local)
+  const [phase, setPhase]     = useState<SetupPhase>('player1')
+  const [fleet, setFleet]     = useState<ShipDef[]>(makeInitialFleet)
+  const [board, setBoard]     = useState<BoardGrid>(createEmptyBoard)
   const [hoverCell, setHoverCell] = useState<{ row: number; col: number } | null>(null)
-  const [showHandover, setShowHandover] = useState(false)
+
+  // Saved player 1 data for 2-player mode
+  const p1FleetRef = useRef<ShipDef[]>([])
+  const p1BoardRef = useRef<BoardGrid>([])
 
   const dragShipId   = useRef<string | null>(null)
   const grabIndexRef = useRef(0)
 
+  const activeName  = phase === 'player2' ? player2 : player1
   const allPlaced   = fleet.every(s => s.placed)
   const placedCount = fleet.filter(s => s.placed).length
 
@@ -97,16 +98,18 @@ export default function StatkiSetupPage() {
   }
 
   function handleReady() {
-    if (mode === '2players-local' && !isPlayer2Setup) {
-      // Player 1 done — show handover screen before player 2 sets up
-      setShowHandover(true)
-    } else if (mode === '2players-local' && isPlayer2Setup) {
-      // Player 2 done — navigate to game with both boards, initial handover for player 1
+    if (mode === '2players-local' && phase === 'player1') {
+      // Save player 1's setup and show handover for player 2
+      p1FleetRef.current = fleet
+      p1BoardRef.current = board
+      setPhase('handover')
+    } else if (mode === '2players-local' && phase === 'player2') {
+      // Both setups done — navigate to game, start with handover for player 1
       navigate('/statki/game', {
         state: {
           mode, difficulty, player1, player2,
-          playerFleet: rs.player1Fleet,
-          playerBoard: rs.player1Board,
+          playerFleet:  p1FleetRef.current,
+          playerBoard:  p1BoardRef.current,
           player2Fleet: fleet,
           player2Board: board,
           initialHandover: true,
@@ -121,22 +124,18 @@ export default function StatkiSetupPage() {
   }
 
   function handleHandoverReady() {
-    // Player 1 confirmed handover — start player 2 setup
-    navigate('/statki/setup', {
-      state: {
-        mode, difficulty, player1, player2,
-        setupFor: 'player2',
-        player1Fleet: fleet,
-        player1Board: board,
-      }
-    })
+    // Switch to player 2's setup — reset board without navigating
+    setFleet(makeInitialFleet())
+    setBoard(createEmptyBoard())
+    setHoverCell(null)
+    setPhase('player2')
   }
 
   const unplacedFleet = fleet.filter(s => !s.placed)
 
   return (
     <>
-      {showHandover && (
+      {phase === 'handover' && (
         <HandoverScreen playerName={player2} onReady={handleHandoverReady} />
       )}
 

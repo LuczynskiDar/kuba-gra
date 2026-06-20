@@ -8,12 +8,14 @@
   position: fixed;
   inset: 0;
   z-index: 0;
+  pointer-events: none;
 }
 
 .statki-bg svg {
   display: block;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 /* Desktop SVG shown ≥640px, mobile SVG shown <640px */

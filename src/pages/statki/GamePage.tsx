@@ -36,10 +36,20 @@ export default function StatkiGamePage() {
   const is2P = mode === '2players-local'
 
   // Handover screen state
-  const [showHandover, setShowHandover]     = useState(routeState?.initialHandover === true)
-  const [handoverTarget, setHandoverTarget] = useState(player1)
+  const [showHandover, setShowHandover]       = useState(routeState?.initialHandover === true)
+  const [handoverTarget, setHandoverTarget]   = useState(player1)
+  const [pendingHandover, setPendingHandover] = useState(false)
+  const [pendingTarget, setPendingTarget]     = useState('')
 
-  // Show handover on miss in 2-player mode
+  // activeViewer controls WHOSE perspective is shown — decoupled from state.turn
+  // so the boards don't flip until after the handover is confirmed
+  const [activeViewer, setActiveViewer] = useState<'player' | 'computer'>('player')
+
+  // Track whether it's the initial handover (device hand-off before first shot)
+  // — that one must NOT flip activeViewer, only dismiss the overlay
+  const isInitialHandover = useRef(routeState?.initialHandover === true)
+
+  // After a miss: show pending button (boards stay in current viewer's perspective)
   const prevPlayerShot   = useRef(state.lastPlayerShot)
   const prevComputerShot = useRef(state.lastComputerShot)
 
@@ -48,8 +58,8 @@ export default function StatkiGamePage() {
     if (state.lastPlayerShot !== prevPlayerShot.current) {
       prevPlayerShot.current = state.lastPlayerShot
       if (state.lastPlayerShot?.result === 'miss') {
-        setHandoverTarget(player2)
-        setShowHandover(true)
+        setPendingTarget(player2)
+        setPendingHandover(true)
       }
     }
   }, [state.lastPlayerShot]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -59,11 +69,26 @@ export default function StatkiGamePage() {
     if (state.lastComputerShot !== prevComputerShot.current) {
       prevComputerShot.current = state.lastComputerShot
       if (state.lastComputerShot?.result === 'miss') {
-        setHandoverTarget(player1)
-        setShowHandover(true)
+        setPendingTarget(player1)
+        setPendingHandover(true)
       }
     }
   }, [state.lastComputerShot]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handlePassDevice() {
+    setPendingHandover(false)
+    setHandoverTarget(pendingTarget)
+    setShowHandover(true)
+  }
+
+  function handleHandoverReady() {
+    setShowHandover(false)
+    if (isInitialHandover.current) {
+      isInitialHandover.current = false   // first handover: just dismiss, don't flip
+    } else {
+      setActiveViewer(prev => prev === 'player' ? 'computer' : 'player')
+    }
+  }
 
   // Navigate to summary when game ends
   useEffect(() => {
@@ -95,15 +120,15 @@ export default function StatkiGamePage() {
   const isComputerTurn = state.turn === 'computer'  && state.status === 'playing'
   const totalShips     = state.playerFleet.length
 
-  // In 2-player mode, boards flip based on active player
-  const p2Turn = is2P && state.turn === 'computer'
+  // In 2-player mode, boards flip based on who confirmed the handover (not state.turn)
+  const p2Turn = is2P && activeViewer === 'computer'
 
   return (
     <>
       {showHandover && (
         <HandoverScreen
           playerName={handoverTarget}
-          onReady={() => setShowHandover(false)}
+          onReady={handleHandoverReady}
         />
       )}
 
@@ -143,6 +168,7 @@ export default function StatkiGamePage() {
                 interactive={false}
                 lastShot={state.lastComputerShot}
                 onCellClick={() => {}}
+                variant="blue"
               />
               <GameBoard
                 title={`Plansza ${player2}`}
@@ -152,6 +178,7 @@ export default function StatkiGamePage() {
                 interactive={isPlayerTurn}
                 lastShot={state.lastPlayerShot}
                 onCellClick={playerFire}
+                variant="red"
               />
             </>
           ) : (
@@ -165,6 +192,7 @@ export default function StatkiGamePage() {
                 interactive={false}
                 lastShot={state.lastPlayerShot}
                 onCellClick={() => {}}
+                variant="red"
               />
               <GameBoard
                 title={`Plansza ${player1}`}
@@ -174,6 +202,7 @@ export default function StatkiGamePage() {
                 interactive={isComputerTurn}
                 lastShot={state.lastComputerShot}
                 onCellClick={player2Fire}
+                variant="blue"
               />
             </>
           )}
@@ -195,6 +224,13 @@ export default function StatkiGamePage() {
               </span>
             )}
           </div>
+        )}
+
+        {/* Pass device button — appears after miss in 2-player mode */}
+        {pendingHandover && (
+          <button className="statki-game__pass-btn" onClick={handlePassDevice}>
+            Przekaż urządzenie → {pendingTarget}
+          </button>
         )}
 
         {/* Difficulty badge (vs Computer only) */}
