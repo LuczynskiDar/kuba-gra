@@ -1,0 +1,119 @@
+.statki-summary {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 40px 24px;
+  color: #fff;
+  text-align: center;
+}
+
+.statki-summary__banner {
+  font-size: 2.5rem;
+  font-weight: 900;
+  padding: 16px 48px;
+  border-radius: 16px;
+  letter-spacing: 0.04em;
+}
+
+.statki-summary__banner--win  { background: rgba(40,180,80,0.25);  border: 2px solid #2ecc71; }
+.statki-summary__banner--lose { background: rgba(180,30,30,0.25); border: 2px solid #e74c3c; }
+
+.statki-summary__winner {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: rgba(255,255,255,0.85);
+}
+
+.statki-summary__stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.statki-summary__stat-block {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 20px 28px;
+  min-width: 160px;
+}
+
+.statki-summary__stat-block h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 14px;
+}
+
+.statki-summary__stat-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.statki-summary__stat-row span { color: rgba(255,255,255,0.5); }
+.statki-summary__stat-row strong { color: #fff; }
+
+.statki-summary__difficulty {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+.statki-summary__db-note {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.2);
+  margin: 0;
+  font-style: italic;
+}
+
+.statki-summary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.statki-summary__btn-primary {
+  padding: 13px 36px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  background: #1a7abf;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(26,122,191,0.45);
+}
+
+.statki-summary__btn-primary:hover {
+  background: #1568a8;
+  transform: translateY(-2px);
+}
+
+.statki-summary__btn-back {
+  padding: 11px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.statki-summary__btn-back:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.8);
+}

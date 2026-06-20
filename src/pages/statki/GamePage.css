@@ -1,0 +1,101 @@
+.statki-game {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 16px 40px;
+  color: #fff;
+}
+
+/* Status banner */
+.statki-game__status {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 10px 32px;
+  border-radius: 50px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.statki-game__status--player   { background: rgba(26, 122, 191, 0.35); border: 1px solid rgba(26,122,191,0.5); }
+.statki-game__status--computer { background: rgba(150, 80, 0, 0.35);   border: 1px solid rgba(200,100,0,0.5); }
+.statki-game__status--player-won   { background: rgba(40, 180, 80, 0.35);  border: 1px solid #2ecc71; }
+.statki-game__status--computer-won { background: rgba(180, 30, 30, 0.35);  border: 1px solid #e74c3c; }
+
+/* Scoreboard */
+.statki-game__score {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 28px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+}
+
+.statki-game__score-player {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.statki-game__score-player--right {
+  align-items: flex-end;
+}
+
+.statki-game__score-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+}
+
+.statki-game__score-sunk {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+}
+
+.statki-game__score-vs {
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.25);
+}
+
+/* Boards */
+.statki-game__boards {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Last shot info */
+.statki-game__last-shot {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.statki-game__shot-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.statki-game__shot-badge--miss  { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+.statki-game__shot-badge--hit   { background: rgba(230,130,0,0.3);   color: #ffaa44; }
+.statki-game__shot-badge--sunk  { background: rgba(200,30,30,0.35);  color: #ff6060; }
+
+.statki-game__shot-badge--enemy.statki-game__shot-badge--miss  { background: rgba(255,255,255,0.06); }
+.statki-game__shot-badge--enemy.statki-game__shot-badge--hit   { background: rgba(200,30,30,0.25);  color: #ff7070; }
+.statki-game__shot-badge--enemy.statki-game__shot-badge--sunk  { background: rgba(160,0,0,0.4);     color: #ff4040; }
+
+/* Difficulty */
+.statki-game__difficulty {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+}
