@@ -1,4 +1,11 @@
+/* ===========================
+   CSS CUSTOM PROPERTIES
+   =========================== */
 .game-board {
+  --cell: 40px;
+  --label: 26px;
+  --gap: 2px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,9 +23,9 @@
 
 .game-board__grid {
   display: grid;
-  grid-template-columns: 26px repeat(10, 40px);
-  grid-template-rows: 26px repeat(10, 40px);
-  gap: 2px;
+  grid-template-columns: var(--label) repeat(10, var(--cell));
+  grid-template-rows: var(--label) repeat(10, var(--cell));
+  gap: var(--gap);
 }
 
 .game-board__corner,
@@ -32,8 +39,8 @@
 }
 
 .game-board__cell {
-  width: 40px;
-  height: 40px;
+  width: var(--cell);
+  height: var(--cell);
   background: rgba(5, 35, 65, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 3px;
@@ -43,6 +50,7 @@
   font-size: 1.1rem;
   transition: background 0.15s ease;
   position: relative;
+  overflow: hidden;
 }
 
 /* Own ships (player's board) */
@@ -96,12 +104,76 @@
   border-color: #4aabdf;
 }
 
-/* Last shot pulse */
-.game-board__cell--last {
-  animation: shot-pulse 0.6s ease-out;
+/* ===========================
+   LAST SHOT ANIMATIONS
+   =========================== */
+
+/* Miss — splash ripple */
+.game-board__cell--last-miss {
+  animation: splash-miss 0.7s ease-out forwards;
 }
 
-@keyframes shot-pulse {
-  0%   { transform: scale(1.3); }
-  100% { transform: scale(1); }
+@keyframes splash-miss {
+  0%   { transform: scale(1.2); box-shadow: 0 0 0 0 rgba(90, 180, 232, 0.8); }
+  50%  { transform: scale(1);   box-shadow: 0 0 0 12px rgba(90, 180, 232, 0); }
+  100% { transform: scale(1);   box-shadow: none; }
+}
+
+/* Hit — explosion burst */
+.game-board__cell--last-hit {
+  animation: explosion-hit 0.6s ease-out forwards;
+}
+
+@keyframes explosion-hit {
+  0%   { transform: scale(1);   background: rgba(255, 200, 0, 0.9); }
+  30%  { transform: scale(1.35); background: rgba(255, 120, 0, 0.85); }
+  60%  { transform: scale(0.95); background: rgba(200, 80, 0, 0.6); }
+  100% { transform: scale(1);   background: rgba(200, 80, 0, 0.5); }
+}
+
+/* Sunk — big explosion + flash */
+.game-board__cell--last-sunk {
+  animation: explosion-sunk 0.8s ease-out forwards;
+}
+
+@keyframes explosion-sunk {
+  0%   { transform: scale(1);    background: rgba(255, 240, 0, 1); box-shadow: 0 0 0 0 rgba(255, 100, 0, 0.9); }
+  20%  { transform: scale(1.5);  background: rgba(255, 80, 0, 0.95); box-shadow: 0 0 0 8px rgba(255, 60, 0, 0.5); }
+  55%  { transform: scale(0.9);  background: rgba(180, 20, 20, 0.85); box-shadow: 0 0 0 16px rgba(255, 0, 0, 0); }
+  80%  { transform: scale(1.05); }
+  100% { transform: scale(1);    background: rgba(160, 20, 20, 0.7); box-shadow: none; }
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 900px) {
+  .game-board {
+    --cell: 34px;
+    --label: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-board {
+    --cell: 28px;
+    --label: 18px;
+    --gap: 1px;
+  }
+
+  .game-board__title {
+    font-size: 0.78rem;
+  }
+
+  .game-board__label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .game-board {
+    --cell: 24px;
+    --label: 16px;
+  }
 }

@@ -99,3 +99,43 @@
   font-size: 0.78rem;
   color: rgba(255,255,255,0.3);
 }
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 900px) {
+  .statki-game {
+    gap: 16px;
+    padding: 20px 12px 32px;
+  }
+
+  .statki-game__boards {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .statki-game {
+    gap: 12px;
+    padding: 14px 8px 28px;
+  }
+
+  .statki-game__status {
+    font-size: 1rem;
+    padding: 8px 20px;
+  }
+
+  .statki-game__score {
+    gap: 14px;
+    padding: 8px 18px;
+  }
+
+  /* Stack boards vertically on small screens */
+  .statki-game__boards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+}

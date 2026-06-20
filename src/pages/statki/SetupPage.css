@@ -218,3 +218,57 @@
   background: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 0.75);
 }
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 960px) {
+  .setup-page {
+    gap: 20px;
+    padding: 24px 16px 32px;
+  }
+
+  .setup-page__main {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .setup-page {
+    gap: 16px;
+    padding: 18px 10px 28px;
+  }
+
+  .setup-page__title {
+    font-size: 1.4rem;
+  }
+
+  /* Fleet panel goes below board, becomes horizontal row */
+  .setup-page__main {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .setup-page__fleet {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .setup-page__ships {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: unset;
+  }
+
+  .ship-item__name {
+    display: none;
+  }
+
+  .ship-item {
+    padding: 4px 6px;
+    gap: 6px;
+  }
+}

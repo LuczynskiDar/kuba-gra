@@ -1,5 +1,5 @@
 import React from 'react'
-import type { ShotGrid } from '../../hooks/useBattleship'
+import type { ShotGrid, LastShot } from '../../hooks/useBattleship'
 import type { BoardGrid } from '../../types/statki'
 import './GameBoard.css'
 
@@ -11,7 +11,7 @@ interface GameBoardProps {
   shots: ShotGrid
   showShips: boolean
   interactive: boolean
-  lastShot: { row: number; col: number } | null
+  lastShot: LastShot | null
   onCellClick: (row: number, col: number) => void
 }
 
@@ -40,7 +40,9 @@ export default function GameBoard({ title, board, shots, showShips, interactive,
                 shot === 'hit'   ? 'game-board__cell--hit'   : '',
                 shot === 'sunk'  ? 'game-board__cell--sunk'  : '',
                 canClick         ? 'game-board__cell--target' : '',
-                isLast           ? 'game-board__cell--last'   : '',
+                isLast && lastShot?.result === 'miss' ? 'game-board__cell--last-miss' : '',
+                isLast && lastShot?.result === 'hit'  ? 'game-board__cell--last-hit'  : '',
+                isLast && lastShot?.result === 'sunk' ? 'game-board__cell--last-sunk' : '',
               ].filter(Boolean).join(' ')
 
               return (

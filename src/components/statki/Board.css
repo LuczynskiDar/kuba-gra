@@ -1,12 +1,19 @@
+/* ===========================
+   CSS CUSTOM PROPERTIES
+   =========================== */
 .setup-board {
+  --cell: 44px;
+  --label: 28px;
+  --gap: 2px;
+
   display: inline-block;
 }
 
 .setup-board__grid {
   display: grid;
-  grid-template-columns: 28px repeat(10, 44px);
-  grid-template-rows: 28px repeat(10, 44px);
-  gap: 2px;
+  grid-template-columns: var(--label) repeat(10, var(--cell));
+  grid-template-rows: var(--label) repeat(10, var(--cell));
+  gap: var(--gap);
 }
 
 .setup-board__corner,
@@ -22,8 +29,8 @@
 }
 
 .setup-board__cell {
-  width: 44px;
-  height: 44px;
+  width: var(--cell);
+  height: var(--cell);
   background: rgba(5, 40, 75, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 3px;
@@ -51,4 +58,35 @@
 .setup-board__cell--invalid {
   background: rgba(231, 76, 60, 0.55);
   border-color: #e74c3c;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 960px) {
+  .setup-board {
+    --cell: 38px;
+    --label: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .setup-board {
+    --cell: 30px;
+    --label: 20px;
+    --gap: 1px;
+  }
+
+  .setup-board__col-label,
+  .setup-board__row-label {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .setup-board {
+    --cell: 26px;
+    --label: 18px;
+  }
 }

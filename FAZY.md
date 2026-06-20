@@ -90,14 +90,23 @@
 
 ---
 
-## Faza 5 — Bitwa Statków: wygląd i styl ⏳ DO ZROBIENIA
+## Faza 5 — Bitwa Statków: wygląd i styl ✅ GOTOWE
 
-- Własne tło: ocean/morze z rybami, rekinami, delfinami, wyspami (SVG lub CSS)
-- Styl militarno-morski dla plansz
-- Animacja trafienia (eksplozja)
-- Animacja chybienia (plusk wody)
-- Ikony statków na planszy (widoczne na własnej planszy)
-- Responsywność (desktop + tablet + mobile)
+**Co zrobiono:**
+- `StatkiLayout.tsx` — pełne animowane tło SVG oceanu: niebo z księżycem i gwiazdami, wyspa z palmą i kokosami, powierzchnia wody z falami, promienie światła, 3 ryby (pomarańczowa, niebieska, żółta), rekin, delfin skaczący, bąbelki, wodorosty, dno oceanu
+- `StatkiLayout.css` — CSS keyframes: płyniące ryby (swim-right/left), wolny rekin, skaczący delfin (dolphin-jump), wzbijające się bąbelki (bubble-rise), kołyszące wodorosty (seaweed-sway)
+- `GameBoard.tsx` — lastShot używa pełnego `LastShot` (z polem `result`) — osobne klasy CSS per wynik
+- `GameBoard.css` — 3 osobne animacje strzałów: pudło (splash-miss — falujący ripple), trafiony (explosion-hit — pomarańczowy wybuch), zatopiony (explosion-sunk — duży żółty błysk); CSS custom properties dla responsywności
+- `GamePage.css` — plansze układają się pionowo na mobile (< 600px)
+- `Board.css` — CSS custom properties `--cell`, rozmiary skalują się na tablet/mobile
+- `SetupPage.css` — lista floty zamienia się w poziomy rząd na mobile, panel pod planszą
+
+**Kluczowe pliki:**
+- `src/pages/statki/StatkiLayout.tsx` + `.css`
+- `src/components/statki/GameBoard.tsx` + `.css`
+- `src/components/statki/Board.css`
+- `src/pages/statki/GamePage.css`
+- `src/pages/statki/SetupPage.css`
 
 ---
 
@@ -150,7 +159,7 @@
 | 2 | Bitwa Statków: szkielet, nawigacja, tryby, imiona | ✅ Gotowe |
 | 3 | Bitwa Statków: drag & drop ustawianie statków | ✅ Gotowe |
 | 4 | Bitwa Statków: logika gry, AI 3 poziomy, vs Komputer | ✅ Gotowe |
-| 5 | Bitwa Statków: wygląd, tło oceaniczne, animacje | ⏳ Do zrobienia |
+| 5 | Bitwa Statków: wygląd, tło oceaniczne, animacje | ✅ Gotowe |
 | 6 | Backend, SQLite, wyniki, Docker | ⏳ Do zrobienia |
 | 7 | 2 graczy na tym samym ekranie | ⏳ Do zrobienia |
 | 8 | 2 graczy online (WebSocket, kod pokoju) | ⏳ Do zrobienia |
