@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import type { GameMode, RoundResult } from '../types'
+import type { GameMode, RoundResult } from '../../types'
 import './SummaryPage.css'
 
 interface RoundSummary {
@@ -58,7 +58,7 @@ export default function SummaryPage() {
         </table>
 
         <div className="summary-actions">
-          <button className="btn-primary" onClick={() => navigate('/mode')}>
+          <button className="btn-primary" onClick={() => navigate('/wisielec/mode')}>
             Zagraj ponownie
           </button>
           <button className="btn-secondary" onClick={() => navigate('/')}>
@@ -143,7 +143,7 @@ export default function SummaryPage() {
       </table>
 
       <div className="summary-actions">
-        <button className="btn-primary" onClick={() => navigate('/mode')}>
+        <button className="btn-primary" onClick={() => navigate('/wisielec/mode')}>
           Zagraj ponownie
         </button>
         <button className="btn-secondary" onClick={() => navigate('/')}>

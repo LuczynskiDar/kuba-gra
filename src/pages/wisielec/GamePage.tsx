@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useGame } from '../hooks/useGame'
-import HangmanSVG from '../components/HangmanSVG'
-import WordDisplay from '../components/WordDisplay'
-import Keyboard from '../components/Keyboard'
-import type { GameMode } from '../types'
+import { useGame } from '../../hooks/useGame'
+import HangmanSVG from '../../components/wisielec/HangmanSVG'
+import WordDisplay from '../../components/wisielec/WordDisplay'
+import Keyboard from '../../components/wisielec/Keyboard'
+import type { GameMode } from '../../types'
 import './GamePage.css'
 
 export default function GamePage() {
@@ -24,7 +24,7 @@ export default function GamePage() {
 
   useEffect(() => {
     if (phase === 'finished' && turnState) {
-      navigate('/summary', {
+      navigate('/wisielec/summary', {
         state: { results: turnState.roundResults, mode },
       })
     }

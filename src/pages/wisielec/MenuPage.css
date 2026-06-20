@@ -58,3 +58,20 @@
 .menu-authors::after {
   background: linear-gradient(to left, transparent, #c8a050);
 }
+
+.btn-back {
+  padding: 10px 28px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  border: 2px solid rgba(255,255,255,0.2) !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: rgba(255,255,255,0.6) !important;
+  box-shadow: none !important;
+}
+
+.btn-back:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+}

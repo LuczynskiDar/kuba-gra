@@ -5,7 +5,7 @@ export default function ModePage() {
   const navigate = useNavigate()
 
   const startGame = (mode: '1player' | '2players') => {
-    navigate('/game', { state: { mode } })
+    navigate('/wisielec/game', { state: { mode } })
   }
 
   return (
