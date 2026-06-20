@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import type { ShipDef, BoardGrid, Difficulty } from '../types/statki'
+import type { ShipDef, BoardGrid, Difficulty, GameMode } from '../types/statki'
 import { getShipCells, makeInitialFleet, randomPlaceFleet } from '../utils/battleshipUtils'
 
 export type ShotState = 'none' | 'miss' | 'hit' | 'sunk' | 'border'
@@ -55,7 +55,6 @@ function processShot(
     const cells = getShipCells(ship.startRow, ship.startCol, ship.size, ship.orientation)
     if (cells.every(([r, c]) => newShots[r][c] === 'hit')) {
       cells.forEach(([r, c]) => { newShots[r][c] = 'sunk' })
-      // Mark surrounding border zone — ships can't be adjacent
       for (const [r, c] of cells) {
         for (let dr = -1; dr <= 1; dr++) {
           for (let dc = -1; dc <= 1; dc++) {
@@ -98,13 +97,11 @@ function getAiShot(shotsGrid: ShotGrid, fleet: ShipDef[], difficulty: Difficulty
     return unshot[Math.floor(Math.random() * unshot.length)]
   }
 
-  // medium + hard: use target queue first
   if (aiState.mode === 'target') {
     const validTargets = aiState.targets.filter(([r, c]) => shotsGrid[r][c] === 'none')
     if (validTargets.length > 0) return validTargets[0]
   }
 
-  // Hunt mode
   if (difficulty === 'hard') {
     const sunkIds = new Set(
       fleet.filter(s => s.startRow !== null && s.startCol !== null &&
@@ -128,18 +125,15 @@ function updateAiState(aiState: AiState, newShots: ShotGrid, row: number, col: n
   if (result === 'sunk') {
     return { mode: 'hunt', targets: [], pendingHits: [] }
   }
-
   if (result === 'miss') {
     return { ...aiState, targets: aiState.targets.filter(([r, c]) => !(r === row && c === col)) }
   }
 
-  // Hit — add unshot adjacent cells to target queue
   const pendingHits: [number, number][] = [...aiState.pendingHits, [row, col]]
   const adjacent: [number, number][] = (
     [[row - 1, col], [row + 1, col], [row, col - 1], [row, col + 1]] as [number, number][]
   ).filter(([r, c]) => r >= 0 && r <= 9 && c >= 0 && c <= 9 && newShots[r][c] === 'none')
 
-  // Prioritize direction if we have multiple hits in line
   let prioritized = adjacent
   if (pendingHits.length >= 2) {
     const rows = pendingHits.map(([r]) => r)
@@ -157,9 +151,19 @@ function updateAiState(aiState: AiState, newShots: ShotGrid, row: number, col: n
   return { mode: 'target', targets: [...prioritized, ...existing], pendingHits }
 }
 
-export function useBattleship(initPlayerBoard: BoardGrid, initPlayerFleet: ShipDef[], difficulty: Difficulty) {
+export function useBattleship(
+  initPlayerBoard: BoardGrid,
+  initPlayerFleet: ShipDef[],
+  difficulty: Difficulty,
+  mode: GameMode = 'computer',
+  initComputerBoard?: BoardGrid,
+  initComputerFleet?: ShipDef[]
+) {
   const [state, setState] = useState<BattleshipState>(() => {
-    const { fleet: computerFleet, board: computerBoard } = randomPlaceFleet(makeInitialFleet())
+    const { fleet: computerFleet, board: computerBoard } =
+      (initComputerBoard && initComputerFleet)
+        ? { fleet: initComputerFleet, board: initComputerBoard }
+        : randomPlaceFleet(makeInitialFleet())
     return {
       playerBoard: initPlayerBoard,
       computerBoard,
@@ -176,6 +180,7 @@ export function useBattleship(initPlayerBoard: BoardGrid, initPlayerFleet: ShipD
 
   const aiStateRef = useRef<AiState>({ mode: 'hunt', targets: [], pendingHits: [] })
 
+  // Player 1 fires — stays on hit, switches on miss
   const playerFire = useCallback((row: number, col: number) => {
     setState(prev => {
       if (prev.turn !== 'player' || prev.status !== 'playing') return prev
@@ -186,14 +191,32 @@ export function useBattleship(initPlayerBoard: BoardGrid, initPlayerFleet: ShipD
         ...prev,
         playerShots: newShots,
         status: won ? 'player-won' : 'playing',
-        turn: won ? 'player' : 'computer',
+        turn: won ? 'player' : (result === 'miss' ? 'computer' : 'player'),
         lastPlayerShot: { row, col, result },
       }
     })
   }, [])
 
-  // Computer turn
+  // Player 2 fires (2-player local only) — stays on hit, switches on miss
+  const player2Fire = useCallback((row: number, col: number) => {
+    setState(prev => {
+      if (prev.turn !== 'computer' || prev.status !== 'playing') return prev
+      if (prev.computerShots[row][col] !== 'none') return prev
+      const { newShots, result } = processShot(prev.playerBoard, prev.playerFleet, prev.computerShots, row, col)
+      const won = isAllSunk(prev.playerFleet, newShots)
+      return {
+        ...prev,
+        computerShots: newShots,
+        status: won ? 'computer-won' : 'playing',
+        turn: won ? 'computer' : (result === 'miss' ? 'player' : 'computer'),
+        lastComputerShot: { row, col, result },
+      }
+    })
+  }, [])
+
+  // AI turn — only in computer mode, stays on hit, switches on miss
   useEffect(() => {
+    if (mode !== 'computer') return
     if (state.turn !== 'computer' || state.status !== 'playing') return
     const timer = setTimeout(() => {
       setState(prev => {
@@ -206,16 +229,16 @@ export function useBattleship(initPlayerBoard: BoardGrid, initPlayerFleet: ShipD
           ...prev,
           computerShots: newShots,
           status: won ? 'computer-won' : 'playing',
-          turn: won ? 'computer' : 'player',
+          turn: won ? 'computer' : (result === 'miss' ? 'player' : 'computer'),
           lastComputerShot: { row, col, result },
         }
       })
     }, 900)
     return () => clearTimeout(timer)
-  }, [state.turn, state.status, difficulty])
+  }, [state.turn, state.status, state.lastComputerShot, difficulty, mode])
 
-  const sunkByPlayer = countSunk(state.computerFleet, state.playerShots)
+  const sunkByPlayer   = countSunk(state.computerFleet, state.playerShots)
   const sunkByComputer = countSunk(state.playerFleet, state.computerShots)
 
-  return { state, playerFire, sunkByPlayer, sunkByComputer }
+  return { state, playerFire, player2Fire, sunkByPlayer, sunkByComputer }
 }

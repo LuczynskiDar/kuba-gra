@@ -130,7 +130,7 @@ export default function StatkiModePage() {
           <button
             className="statki-btn-primary"
             onClick={startGame}
-            disabled={!player1.trim()}
+            disabled={!player1.trim() || (mode !== 'computer' && !player2.trim())}
           >
             Dalej →
           </button>

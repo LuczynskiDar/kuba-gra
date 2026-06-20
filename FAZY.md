@@ -110,15 +110,25 @@
 
 ---
 
-## Faza 6 — Backend i wyniki ⏳ DO ZROBIENIA
+## Faza 6 — Backend i wyniki ✅ GOTOWE
 
-- Backend Node.js + Express + SQLite w `backend/`
-- Tabele: `results_solo`, `results_multiplayer`
-- Max 30 wpisów per tabela
-- Endpointy: `POST /api/results`, `GET /api/results/solo`, `GET /api/results/multiplayer`
-- `Dockerfile.backend` + nowy serwis w `docker-compose.yml`
-- Nginx proxy: `/api/*` → backend
-- SummaryPage: zapis wyniku + tabela top 30
+**Co zrobiono:**
+- Backend Node.js + Express + better-sqlite3 w `backend/`
+- Tabele: `results_solo`, `results_multiplayer`, max 30 wpisów per tabela (trim w transakcji)
+- Endpointy: `POST /api/results`, `GET /api/results/solo`, `GET /api/results/multiplayer`, `GET /api/health`
+- `Dockerfile.backend` (Node 20 Alpine + python3/make/g++ do kompilacji better-sqlite3)
+- Dwa serwisy w `docker-compose.yml`: `gry` (nginx) + `backend` (Node), volume `backend-data`
+- Nginx proxy: `/api/*` → `http://backend:3001`
+- Vite dev proxy: `/api` → `localhost:3001`
+- `SummaryPage.tsx`: POST wyniku po załadowaniu (z ref-guard przed duplikatem), tabela top 30 z kolumnami gracz/przeciwnik/wynik/celność/strzały/data
+- Graceful fallback "Serwer niedostępny" gdy backend offline
+
+**Kluczowe pliki:**
+- `backend/server.js` + `backend/package.json`
+- `Dockerfile.backend`
+- `docker-compose.yml` + `nginx.conf`
+- `vite.config.ts`
+- `src/pages/statki/SummaryPage.tsx` + `.css`
 
 ---
 
@@ -160,7 +170,7 @@
 | 3 | Bitwa Statków: drag & drop ustawianie statków | ✅ Gotowe |
 | 4 | Bitwa Statków: logika gry, AI 3 poziomy, vs Komputer | ✅ Gotowe |
 | 5 | Bitwa Statków: wygląd, tło oceaniczne, animacje | ✅ Gotowe |
-| 6 | Backend, SQLite, wyniki, Docker | ⏳ Do zrobienia |
+| 6 | Backend, SQLite, wyniki, Docker | ✅ Gotowe |
 | 7 | 2 graczy na tym samym ekranie | ⏳ Do zrobienia |
 | 8 | 2 graczy online (WebSocket, kod pokoju) | ⏳ Do zrobienia |
 | 9 | Testy i deploy na VPS | ⏳ Do zrobienia |

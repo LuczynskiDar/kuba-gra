@@ -45,15 +45,30 @@ export default function StatkiSummaryPage() {
     if (savedRef.current || !s.player1) return
     savedRef.current = true
 
-    const body = {
-      mode:       apiMode,
-      player:     s.player1,
-      opponent:   s.player2,
-      result:     playerWon ? 'W' : 'L',
-      difficulty: s.difficulty ?? undefined,
-      accuracy:   s.playerAccuracy,
-      shots:      s.playerShots,
-    }
+    // Solo: save player1's result (W or L)
+    // Multiplayer: save only the winner
+    const loser        = s.winner === s.player1 ? s.player2 : s.player1
+    const winnerShots  = s.winner === s.player1 ? s.playerShots    : s.computerShots
+    const winnerAcc    = s.winner === s.player1 ? s.playerAccuracy : s.computerAccuracy
+
+    const body = apiMode === 'solo'
+      ? {
+          mode: 'solo',
+          player:     s.player1,
+          opponent:   s.player2,
+          result:     playerWon ? 'W' : 'L',
+          difficulty: s.difficulty ?? undefined,
+          accuracy:   s.playerAccuracy,
+          shots:      s.playerShots,
+        }
+      : {
+          mode: 'multiplayer',
+          player:   s.winner,
+          opponent: loser,
+          result:   'W',
+          accuracy: winnerAcc,
+          shots:    winnerShots,
+        }
 
     fetch('/api/results', {
       method:  'POST',
