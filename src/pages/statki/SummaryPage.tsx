@@ -1,6 +1,28 @@
+import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import type { GameMode, Difficulty } from '../../types/statki'
 import './SummaryPage.css'
+
+interface ResultRow {
+  id: number
+  player: string
+  opponent: string
+  result: 'W' | 'L'
+  difficulty?: string
+  accuracy: number
+  shots: number
+  played_at: string
+}
+
+function diffLabel(d: string): string {
+  return d === 'easy' ? 'Łatwy' : d === 'medium' ? 'Średni' : 'Trudny'
+}
+
+function formatDate(iso: string): string {
+  const d = new Date(iso)
+  return d.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
+    + ' ' + d.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })
+}
 
 export default function StatkiSummaryPage() {
   const navigate = useNavigate()
@@ -13,6 +35,37 @@ export default function StatkiSummaryPage() {
   }
 
   const playerWon = s.winner === s.player1
+  const apiMode   = s.mode === 'computer' ? 'solo' : 'multiplayer'
+
+  const [rows, setRows]         = useState<ResultRow[]>([])
+  const [dbError, setDbError]   = useState(false)
+  const savedRef                = useRef(false)
+
+  useEffect(() => {
+    if (savedRef.current || !s.player1) return
+    savedRef.current = true
+
+    const body = {
+      mode:       apiMode,
+      player:     s.player1,
+      opponent:   s.player2,
+      result:     playerWon ? 'W' : 'L',
+      difficulty: s.difficulty ?? undefined,
+      accuracy:   s.playerAccuracy,
+      shots:      s.playerShots,
+    }
+
+    fetch('/api/results', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(body),
+    })
+      .then(r => { if (!r.ok) throw new Error() })
+      .then(() => fetch(`/api/results/${apiMode}`))
+      .then(r => r.json())
+      .then((data: ResultRow[]) => setRows(data))
+      .catch(() => setDbError(true))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="statki-summary">
@@ -48,13 +101,53 @@ export default function StatkiSummaryPage() {
 
       {s.difficulty && (
         <p className="statki-summary__difficulty">
-          Poziom trudności: <strong>{s.difficulty === 'easy' ? 'Łatwy' : s.difficulty === 'medium' ? 'Średni' : 'Trudny'}</strong>
+          Poziom trudności: <strong>{diffLabel(s.difficulty)}</strong>
         </p>
       )}
 
-      <p className="statki-summary__db-note">
-        Zapis wyników do bazy danych — Faza 6
-      </p>
+      {/* Leaderboard */}
+      <div className="statki-summary__leaderboard">
+        <h3 className="statki-summary__lb-title">
+          Tabela wyników — {apiMode === 'solo' ? 'vs Komputer' : '2 graczy'}
+        </h3>
+
+        {dbError ? (
+          <p className="statki-summary__lb-error">Serwer wyników niedostępny</p>
+        ) : rows.length === 0 ? (
+          <p className="statki-summary__lb-empty">Ładowanie…</p>
+        ) : (
+          <div className="statki-summary__lb-wrap">
+            <table className="statki-summary__lb-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Gracz</th>
+                  <th>Przeciwnik</th>
+                  <th>Wynik</th>
+                  {apiMode === 'solo' && <th>Poziom</th>}
+                  <th>Celność</th>
+                  <th>Strzały</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={row.id} className={row.result === 'W' ? 'statki-summary__lb-win' : 'statki-summary__lb-lose'}>
+                    <td>{i + 1}</td>
+                    <td>{row.player}</td>
+                    <td>{row.opponent}</td>
+                    <td className="statki-summary__lb-result">{row.result === 'W' ? '✓' : '✗'}</td>
+                    {apiMode === 'solo' && <td>{diffLabel(row.difficulty ?? '')}</td>}
+                    <td>{row.accuracy}%</td>
+                    <td>{row.shots}</td>
+                    <td>{formatDate(row.played_at)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
       <div className="statki-summary__actions">
         <button className="statki-summary__btn-primary" onClick={() => navigate('/statki/mode')}>

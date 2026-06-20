@@ -341,21 +341,21 @@ export default function StatkiLayout() {
           <g transform="translate(308,604) rotate(14)">
             <polygon points="0,-20 4.4,-7 18,-6.4 7,2.2 11,16.4 0,8.2 -11,16.4 -7,2.2 -18,-6.4 -4.4,-7"
               fill="#d03a18" stroke="#ee5830" strokeWidth="1"/>
-            {[0,-12,7,8,-7,8,11,-3.5,-11,-3.5].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+            {[0,-12,7,8,-7,8,11,-3.5,-11,-3.5].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]] as [number,number]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="2.2" fill="#f06038" opacity="0.6"/>)}
             <circle cx="0" cy="0" r="4.5" fill="#b02810"/>
           </g>
           <g transform="translate(738,608) rotate(-22)">
             <polygon points="0,-16 3.5,-5.5 14.4,-4.8 5.6,1.6 8.8,12.8 0,6.4 -8.8,12.8 -5.6,1.6 -14.4,-4.8 -3.5,-5.5"
               fill="#7a2890" stroke="#9a44b0" strokeWidth="1"/>
-            {[0,-9,6,6,-6,6,9,-3,-9,-3].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+            {[0,-9,6,6,-6,6,9,-3,-9,-3].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]] as [number,number]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="1.8" fill="#b060c8" opacity="0.6"/>)}
             <circle cx="0" cy="0" r="3.5" fill="#5a1870"/>
           </g>
           <g transform="translate(1155,605) rotate(6)">
             <polygon points="0,-22 4.8,-7.6 20.2,-6.6 7.8,2.4 12.2,17.6 0,9 -12.2,17.6 -7.8,2.4 -20.2,-6.6 -4.8,-7.6"
               fill="#df5e0e" stroke="#f07e2e" strokeWidth="1"/>
-            {[0,-13,8,9,-8,9,12,-4,-12,-4].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+            {[0,-13,8,9,-8,9,12,-4,-12,-4].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]] as [number,number]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
               <circle key={i} cx={cx} cy={cy} r="2.5" fill="#f08838" opacity="0.55"/>)}
             <circle cx="0" cy="0" r="5" fill="#b03c08"/>
           </g>
