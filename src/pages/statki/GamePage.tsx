@@ -31,9 +31,9 @@ export default function StatkiGamePage() {
     const timer = setTimeout(() => {
       const pShots = state.playerShots.flat()
       const cShots = state.computerShots.flat()
-      const pFired  = pShots.filter(s => s !== 'none').length
+      const pFired  = pShots.filter(s => s === 'miss' || s === 'hit' || s === 'sunk').length
       const pHits   = pShots.filter(s => s === 'hit' || s === 'sunk').length
-      const cFired  = cShots.filter(s => s !== 'none').length
+      const cFired  = cShots.filter(s => s === 'miss' || s === 'hit' || s === 'sunk').length
       const cHits   = cShots.filter(s => s === 'hit' || s === 'sunk').length
       navigate('/statki/summary', {
         state: {

@@ -95,6 +95,17 @@
   font-weight: 900;
 }
 
+/* Border zone — auto-cleared around sunk ship */
+.game-board__cell--border {
+  background: rgba(5, 35, 65, 0.45);
+}
+.game-board__cell--border::after {
+  content: '·';
+  color: rgba(90, 180, 232, 0.45);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
 /* Clickable target */
 .game-board__grid--interactive .game-board__cell--target {
   cursor: crosshair;

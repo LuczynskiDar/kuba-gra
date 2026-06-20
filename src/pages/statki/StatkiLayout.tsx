@@ -5,411 +5,555 @@ export default function StatkiLayout() {
   return (
     <div className="statki-layout">
       <div className="statki-bg" aria-hidden="true">
-        <svg
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="xMidYMid slice"
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%" height="100%"
-        >
+
+        {/* ── DESKTOP / LANDSCAPE (≥640px) ── viewBox 1440×810 (16:9) */}
+        <svg className="statki-bg__desktop"
+          viewBox="0 0 1440 810" preserveAspectRatio="xMidYMin slice"
+          xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="#020c1a" />
-              <stop offset="100%" stopColor="#0a1e38" />
+            <linearGradient id="sky-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#010a18"/>
+              <stop offset="100%" stopColor="#091c35"/>
             </linearGradient>
-            <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="#0c4a72" />
-              <stop offset="40%"  stopColor="#083a5e" />
-              <stop offset="100%" stopColor="#020e1e" />
+            <linearGradient id="ocean-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#0c4a72"/>
+              <stop offset="40%"  stopColor="#083a5e"/>
+              <stop offset="100%" stopColor="#020d1c"/>
             </linearGradient>
-            <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="#5ab4e8" stopOpacity="0.10" />
-              <stop offset="100%" stopColor="#5ab4e8" stopOpacity="0" />
+            <linearGradient id="ray-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#5ab4e8" stopOpacity="0.11"/>
+              <stop offset="100%" stopColor="#5ab4e8" stopOpacity="0"/>
             </linearGradient>
-            <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stopColor="#f8e878" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#f8e878" stopOpacity="0" />
+            <radialGradient id="moon-g" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stopColor="#f8e878" stopOpacity="0.32"/>
+              <stop offset="100%" stopColor="#f8e878" stopOpacity="0"/>
             </radialGradient>
-            <radialGradient id="sandGrad" cx="50%" cy="30%" r="60%">
-              <stop offset="0%"   stopColor="#e8c060" />
-              <stop offset="100%" stopColor="#b88030" />
+            <radialGradient id="sand-g" cx="50%" cy="30%" r="60%">
+              <stop offset="0%"   stopColor="#f0cc68"/>
+              <stop offset="100%" stopColor="#a87020"/>
             </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
+            {/* Fish gradients */}
+            <radialGradient id="cf-g" cx="28%" cy="32%" r="70%">
+              <stop offset="0%"   stopColor="#ffaa3a"/>
+              <stop offset="55%"  stopColor="#e06812"/>
+              <stop offset="100%" stopColor="#9c3000"/>
+            </radialGradient>
+            <radialGradient id="bf-g" cx="65%" cy="32%" r="68%">
+              <stop offset="0%"   stopColor="#66c8ff"/>
+              <stop offset="55%"  stopColor="#1880e2"/>
+              <stop offset="100%" stopColor="#073578"/>
+            </radialGradient>
+            <radialGradient id="yf-g" cx="30%" cy="32%" r="68%">
+              <stop offset="0%"   stopColor="#fff870"/>
+              <stop offset="58%"  stopColor="#e8c00a"/>
+              <stop offset="100%" stopColor="#a07400"/>
+            </radialGradient>
+            <linearGradient id="sh-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#728898"/>
+              <stop offset="100%" stopColor="#4a6070"/>
+            </linearGradient>
+            <radialGradient id="oct-g" cx="40%" cy="35%" r="65%">
+              <stop offset="0%"   stopColor="#c060d8"/>
+              <stop offset="60%"  stopColor="#8030a0"/>
+              <stop offset="100%" stopColor="#500870"/>
+            </radialGradient>
+            <linearGradient id="palm-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#7a5028"/>
+              <stop offset="100%" stopColor="#4e2c0c"/>
+            </linearGradient>
           </defs>
 
-          {/* === SKY === */}
-          <rect width="1440" height="185" fill="url(#skyGrad)" />
+          {/* SKY */}
+          <rect width="1440" height="165" fill="url(#sky-g)"/>
 
-          {/* Moon glow halo */}
-          <ellipse cx="150" cy="68" rx="85" ry="85" fill="url(#moonGlow)" />
-          {/* Moon body */}
-          <circle cx="150" cy="68" r="34" fill="#f8f0c0" />
-          {/* Shadow to create crescent */}
-          <circle cx="164" cy="60" r="29" fill="#0a1830" />
-          {/* Moon surface craters */}
-          <circle cx="138" cy="72" r="4" fill="rgba(200,180,100,0.3)" />
-          <circle cx="148" cy="55" r="2.5" fill="rgba(200,180,100,0.25)" />
-          <circle cx="130" cy="60" r="3" fill="rgba(200,180,100,0.2)" />
+          {/* Moon halo + crescent */}
+          <ellipse cx="145" cy="64" rx="80" ry="80" fill="url(#moon-g)"/>
+          <circle  cx="145" cy="64" r="33" fill="#f8f0bc"/>
+          <circle  cx="159" cy="56" r="28" fill="#091c35"/>
+          {/* Craters */}
+          <circle cx="134" cy="70" r="4"   fill="rgba(200,175,90,0.28)"/>
+          <circle cx="144" cy="53" r="2.5" fill="rgba(200,175,90,0.22)"/>
+          <circle cx="126" cy="58" r="3"   fill="rgba(200,175,90,0.18)"/>
 
           {/* Stars */}
-          {[
-            [310,28,2],[420,18,1.5],[520,40,1.2],[630,12,2.2],[750,32,1.5],
-            [860,8,1.8],[970,35,1.2],[1080,20,2],[1180,44,1.5],[1290,15,1.8],
-            [1380,38,1.2],[690,55,1.5],[840,48,1.2],[1100,58,1.8],[560,22,1],
-            [720,14,1.3],[1020,50,1],[460,48,1.5],[380,30,1],[1240,42,1.3],
-          ].map(([x,y,r], i) => (
-            <circle key={i} cx={x} cy={y} r={r} fill="#fff"
-              opacity={0.4 + (i % 4) * 0.15} />
+          {([
+            [305,26,2],[418,16,1.5],[518,38,1.2],[628,10,2.2],[748,30,1.6],
+            [858,7,1.8],[968,34,1.2],[1078,19,2],[1178,42,1.5],[1288,13,1.8],
+            [1378,36,1.2],[688,53,1.5],[838,46,1.2],[1098,56,1.8],[558,21,1],
+            [718,13,1.3],[1018,49,1],[458,46,1.5],[378,28,1],[1238,40,1.3],
+            [200,18,1],[490,14,1.2],[910,24,1.4],[1150,30,1],
+          ] as [number,number,number][]).map(([x,y,r],i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill="#fff" opacity={0.38+(i%4)*0.14}/>
           ))}
 
-          {/* =============================================
-              ISLAND (upper right) — improved
-          ============================================= */}
+          {/* ── ISLAND (upper right) ── */}
+          {/* Sand shadow base */}
+          <ellipse cx="1300" cy="168" rx="105" ry="14" fill="#7a5010" opacity="0.55"/>
+          {/* Sand */}
+          <ellipse cx="1300" cy="163" rx="102" ry="16" fill="url(#sand-g)"/>
+          {/* Vegetation */}
+          <ellipse cx="1262" cy="148" rx="74"  ry="24" fill="#1e5410"/>
+          <ellipse cx="1308" cy="150" rx="52"  ry="19" fill="#2a6c18"/>
+          <ellipse cx="1238" cy="156" rx="38"  ry="14" fill="#174c0e"/>
+          <ellipse cx="1338" cy="155" rx="32"  ry="12" fill="#235c14"/>
+          <ellipse cx="1285" cy="144" rx="26"  ry="10" fill="#327020"/>
+          {/* Beach rocks */}
+          <ellipse cx="1205" cy="162" rx="10" ry="5.5" fill="#9a6c28"/>
+          <ellipse cx="1365" cy="160" rx="7"  ry="4"   fill="#8a6020"/>
+          <ellipse cx="1390" cy="164" rx="9"  ry="4.5" fill="#7a5518"/>
 
-          {/* Sand base — layered for depth */}
-          <ellipse cx="1295" cy="182" rx="100" ry="16" fill="#8b6020" opacity="0.6" />
-          <ellipse cx="1295" cy="178" rx="98"  ry="18" fill="url(#sandGrad)" />
-          {/* Vegetation / ground cover */}
-          <ellipse cx="1260" cy="163" rx="72" ry="23" fill="#245c14" />
-          <ellipse cx="1305" cy="166" rx="50" ry="18" fill="#2d7018" />
-          <ellipse cx="1240" cy="170" rx="36" ry="14" fill="#1e5010" />
-          <ellipse cx="1330" cy="172" rx="28" ry="10" fill="#2a6015" />
-          {/* Small rocks on beach */}
-          <ellipse cx="1210" cy="177" rx="9" ry="5" fill="#a87830" />
-          <ellipse cx="1360" cy="175" rx="6" ry="3.5" fill="#9a7028" />
-          <ellipse cx="1385" cy="179" rx="8" ry="4" fill="#8a6020" />
+          {/* Palm trunk (curved path) */}
+          <path d="M1282 162 C1280 144 1274 126 1271 108 C1268 90 1270 74 1272 58"
+            stroke="url(#palm-g)" strokeWidth="9" fill="none" strokeLinecap="round"/>
+          {/* Trunk texture */}
+          <path d="M1279 154 C1276 140 1271 122 1269 104"
+            stroke="#a07030" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.4"/>
+          <path d="M1285 148 C1282 134 1276 116 1274 96"
+            stroke="#a07030" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.3"/>
 
-          {/* Palm trunk — curved path */}
-          <path
-            d="M1278 180 C1276 160 1270 145 1268 125 C1266 108 1270 92 1272 76"
-            stroke="#6b4018" strokeWidth="8" fill="none" strokeLinecap="round"
-          />
-          {/* Trunk texture lines */}
-          <path
-            d="M1275 172 C1273 162 1268 148 1266 132"
-            stroke="#8a5520" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.5"
-          />
-          <path
-            d="M1281 165 C1279 155 1273 140 1271 120"
-            stroke="#8a5520" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.4"
-          />
+          {/* Palm leaves — 7 leaves, layered */}
+          <path d="M1272 58 C1246 50 1218 54 1196 68" stroke="#186014" strokeWidth="10" fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1246 50 1218 54 1196 68" stroke="#24801c" strokeWidth="4"  fill="none" strokeLinecap="round" strokeDasharray="5 3" opacity="0.55"/>
+          <path d="M1272 58 C1258 40 1252 20 1262 3"  stroke="#156010" strokeWidth="9"  fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1258 40 1252 20 1262 3"  stroke="#22781a" strokeWidth="4"  fill="none" strokeLinecap="round" strokeDasharray="5 3" opacity="0.5"/>
+          <path d="M1272 58 C1292 38 1314 28 1330 34" stroke="#1a6414" strokeWidth="9"  fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1292 38 1314 28 1330 34" stroke="#268020" strokeWidth="4"  fill="none" strokeLinecap="round" strokeDasharray="5 3" opacity="0.5"/>
+          <path d="M1272 58 C1298 54 1322 58 1340 72" stroke="#1e6818" strokeWidth="10" fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1298 54 1322 58 1340 72" stroke="#2a7e22" strokeWidth="4"  fill="none" strokeLinecap="round" strokeDasharray="5 3" opacity="0.55"/>
+          {/* Drooping leaves */}
+          <path d="M1272 58 C1258 66 1238 74 1220 88" stroke="#175c12" strokeWidth="8" fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1288 66 1308 76 1322 92" stroke="#1e6818" strokeWidth="8" fill="none" strokeLinecap="round"/>
+          <path d="M1272 58 C1275 44 1286 32 1298 24" stroke="#1a6014" strokeWidth="6" fill="none" strokeLinecap="round"/>
 
-          {/* Palm leaves — 6 leaves, more detailed */}
-          {/* Leaf 1 — left sweeping */}
-          <path d="M1272 76 C1248 70 1222 74 1202 86" stroke="#1e7018" strokeWidth="9" fill="none" strokeLinecap="round"/>
-          <path d="M1272 76 C1248 70 1222 74 1202 86" stroke="#2a8a22" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="4 3" opacity="0.6"/>
-          {/* Leaf 2 — upper left */}
-          <path d="M1272 76 C1258 58 1250 40 1260 22" stroke="#1a6815" strokeWidth="8" fill="none" strokeLinecap="round"/>
-          <path d="M1272 76 C1258 58 1250 40 1260 22" stroke="#2a8020" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeDasharray="4 3" opacity="0.5"/>
-          {/* Leaf 3 — upper right */}
-          <path d="M1272 76 C1290 56 1310 46 1325 52" stroke="#1e7018" strokeWidth="8" fill="none" strokeLinecap="round"/>
-          <path d="M1272 76 C1290 56 1310 46 1325 52" stroke="#2a8a22" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeDasharray="4 3" opacity="0.5"/>
-          {/* Leaf 4 — right */}
-          <path d="M1272 76 C1296 72 1318 76 1334 88" stroke="#246018" strokeWidth="9" fill="none" strokeLinecap="round"/>
-          <path d="M1272 76 C1296 72 1318 76 1334 88" stroke="#2e7a20" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="4 3" opacity="0.6"/>
-          {/* Leaf 5 — drooping left */}
-          <path d="M1272 76 C1260 82 1240 88 1224 100" stroke="#1a6015" strokeWidth="7" fill="none" strokeLinecap="round"/>
-          {/* Leaf 6 — drooping right */}
-          <path d="M1272 76 C1285 82 1302 90 1316 104" stroke="#246018" strokeWidth="7" fill="none" strokeLinecap="round"/>
+          {/* Coconut cluster */}
+          <circle cx="1264" cy="66" r="7"   fill="#5c2c08"/>
+          <circle cx="1275" cy="70" r="6.5" fill="#6a3410"/>
+          <circle cx="1268" cy="73" r="6"   fill="#7a3e14"/>
+          <circle cx="1262" cy="64" r="2.2" fill="rgba(255,210,140,0.28)"/>
+          <circle cx="1273" cy="68" r="2"   fill="rgba(255,210,140,0.22)"/>
 
-          {/* Coconuts cluster */}
-          <circle cx="1263" cy="84" r="6.5" fill="#6b3c10" />
-          <circle cx="1274" cy="88" r="6"   fill="#7a4412" />
-          <circle cx="1268" cy="90" r="5.5" fill="#8a4e16" />
-          {/* Coconut sheen */}
-          <circle cx="1261" cy="82" r="2" fill="rgba(255,220,150,0.25)" />
-          <circle cx="1272" cy="86" r="1.8" fill="rgba(255,220,150,0.2)" />
+          {/* WATER SURFACE */}
+          <path d="M0 165 Q90 155 180 165 Q270 175 360 165 Q450 155 540 165
+                   Q630 175 720 165 Q810 155 900 165 Q990 175 1080 165
+                   Q1170 155 1260 165 Q1350 175 1440 165
+                   L1440 180 Q1350 190 1260 180 Q1170 170 1080 180
+                   Q990 190 900 180 Q810 170 720 180 Q630 190 540 180
+                   Q450 170 360 180 Q270 190 180 180 Q90 170 0 180 Z"
+            fill="#1878aa" opacity="0.65"/>
+          <path d="M0 174 Q360 164 720 174 Q1080 184 1440 174"
+            stroke="#8ad4f0" strokeWidth="1.5" fill="none" opacity="0.32"/>
 
-          {/* === WATER SURFACE === */}
-          <path
-            d="M0 185 Q90 175 180 185 Q270 195 360 185 Q450 175 540 185
-               Q630 195 720 185 Q810 175 900 185 Q990 195 1080 185
-               Q1170 175 1260 185 Q1350 195 1440 185
-               L1440 200 Q1350 210 1260 200 Q1170 190 1080 200
-               Q990 210 900 200 Q810 190 720 200 Q630 210 540 200
-               Q450 190 360 200 Q270 210 180 200 Q90 190 0 200 Z"
-            fill="#1a7aaa" opacity="0.65"
-          />
-          {/* Surface shimmer lines */}
-          <path
-            d="M0 193 Q180 185 360 193 Q540 201 720 193 Q900 185 1080 193 Q1260 201 1440 193"
-            stroke="#8ad4f0" strokeWidth="1.5" fill="none" opacity="0.35"
-          />
-          <path
-            d="M0 198 Q240 191 480 198 Q720 205 960 198 Q1200 191 1440 198"
-            stroke="#5ab4e8" strokeWidth="1" fill="none" opacity="0.25"
-          />
-
-          {/* === OCEAN === */}
-          <rect y="185" width="1440" height="715" fill="url(#oceanGrad)" />
+          {/* OCEAN */}
+          <rect y="165" width="1440" height="645" fill="url(#ocean-g)"/>
 
           {/* Light rays */}
-          <polygon points="480,185 340,900 620,900"   fill="url(#rayGrad)" />
-          <polygon points="780,185 660,900 900,900"   fill="url(#rayGrad)" />
-          <polygon points="1100,185 960,900 1240,900" fill="url(#rayGrad)" />
+          <polygon points="480,165 320,810 640,810"  fill="url(#ray-g)"/>
+          <polygon points="780,165 640,810 920,810"  fill="url(#ray-g)"/>
+          <polygon points="1100,165 940,810 1260,810" fill="url(#ray-g)"/>
 
-          {/* =============================================
-              OCTOPUS (ośmiornica) at ~(900, 700)
-          ============================================= */}
-          <g className="ocean-octopus-1">
-            {/* Tentacles — 8 curvy paths */}
-            <path d="M900 730 C880 750 860 780 850 820 C840 850 848 870 840 885" stroke="#7a3a8a" strokeWidth="8" fill="none" strokeLinecap="round"/>
-            <path d="M900 730 C885 755 878 790 882 825 C886 855 878 868 874 885" stroke="#7a3a8a" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 730 C900 758 900 790 904 825 C908 855 904 870 900 885" stroke="#7a3a8a" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 730 C915 755 922 790 918 825 C914 855 922 868 926 885" stroke="#7a3a8a" strokeWidth="7" fill="none" strokeLinecap="round"/>
-            <path d="M900 730 C920 750 940 780 950 820 C960 850 952 870 960 885" stroke="#7a3a8a" strokeWidth="8" fill="none" strokeLinecap="round"/>
-            {/* 3 shorter tentacles up front */}
-            <path d="M892 732 C878 748 868 762 856 772" stroke="#8a4a9a" strokeWidth="6" fill="none" strokeLinecap="round"/>
-            <path d="M900 732 C900 750 898 765 896 778" stroke="#8a4a9a" strokeWidth="6" fill="none" strokeLinecap="round"/>
-            <path d="M908 732 C922 748 932 762 944 772" stroke="#8a4a9a" strokeWidth="6" fill="none" strokeLinecap="round"/>
-
-            {/* Suction cups on tentacles */}
-            {[
-              [850,820],[840,850],[875,825],[876,860],[901,825],[902,855],[919,825],[926,858],[950,820],[956,852],
-            ].map(([cx,cy],i) => (
-              <circle key={i} cx={cx} cy={cy} r="2.5" fill="none" stroke="#c06ad0" strokeWidth="1.2" opacity="0.7"/>
-            ))}
-
-            {/* Head / mantle */}
-            <ellipse cx="900" cy="700" rx="40" ry="28" fill="#8a3a9a" />
-            {/* Mantle highlight */}
-            <ellipse cx="895" cy="692" rx="22" ry="12" fill="rgba(180,100,200,0.3)" />
-            {/* Body */}
-            <ellipse cx="900" cy="728" rx="32" ry="20" fill="#9a4aaa" />
-            {/* Body highlight */}
-            <ellipse cx="895" cy="723" rx="16" ry="8" fill="rgba(180,100,200,0.25)" />
-
-            {/* Eyes */}
-            <circle cx="882" cy="704" r="8"   fill="#1a0a20" />
-            <circle cx="882" cy="704" r="5.5" fill="#2a1a30" />
-            <circle cx="879" cy="701" r="2.5" fill="#fff" opacity="0.9" />
-            <circle cx="882" cy="707" r="1.5" fill="rgba(150,80,200,0.5)" />
-
-            <circle cx="918" cy="704" r="8"   fill="#1a0a20" />
-            <circle cx="918" cy="704" r="5.5" fill="#2a1a30" />
-            <circle cx="915" cy="701" r="2.5" fill="#fff" opacity="0.9" />
-            <circle cx="918" cy="707" r="1.5" fill="rgba(150,80,200,0.5)" />
-
-            {/* Pupils */}
-            <ellipse cx="882" cy="704" rx="1.5" ry="2" fill="#000" />
-            <ellipse cx="918" cy="704" rx="1.5" ry="2" fill="#000" />
-
-            {/* Ink cloud (small dark puff behind) */}
-            <ellipse cx="860" cy="718" rx="14" ry="9" fill="#1a0a2a" opacity="0.35" />
-            <ellipse cx="852" cy="712" rx="9"  ry="6" fill="#1a0a2a" opacity="0.25" />
+          {/* ── DOLPHIN — jumping near surface ── */}
+          <g className="ocean-dolphin-1">
+            <ellipse cx="680" cy="188" rx="54" ry="14" fill="#4a8aaa"/>
+            <polygon points="680,174 702,152 716,174" fill="#3a7898"/>
+            <polygon points="626,188 602,174 602,202" fill="#3a7898"/>
+            <ellipse cx="650" cy="193" rx="14" ry="6"  fill="#3a7898" transform="rotate(-22 650 193)"/>
+            <ellipse cx="668" cy="190" rx="36" ry="6"  fill="#c0dce8" opacity="0.6"/>
+            <polygon points="730,188 752,184 752,192" fill="#5a9ab8"/>
+            <circle cx="724" cy="183" r="5.5" fill="#1a2a3a"/>
+            <circle cx="722" cy="181" r="2"   fill="#fff" opacity="0.8"/>
+            <path d="M730 190 Q739 193 743 191" stroke="#3a7898" strokeWidth="1.5" fill="none"/>
           </g>
 
-          {/* =============================================
-              FISH 1 — orange clownfish, swims right, y=315
-          ============================================= */}
+          {/* ── CLOWNFISH (fish 1) — facing right, y=284 ── */}
           <g className="ocean-fish-1">
-            {/* Body */}
-            <ellipse cx="0" cy="315" rx="30" ry="13" fill="#e8801a" />
             {/* Tail */}
-            <polygon points="-30,315 -52,301 -52,329" fill="#d06010" />
+            <path d="M-24,284 C-33,277 -46,270 -51,266 L-44,275 L-24,284 L-44,293 L-51,302 C-46,298 -33,291 -24,284Z"
+              fill="#b04008"/>
+            {/* Body */}
+            <path d="M26,284 C24,271 11,268 -1,269 C-14,270 -24,276 -24,284 C-24,292 -14,298 -1,299 C11,300 24,297 26,284Z"
+              fill="url(#cf-g)" stroke="#7a2400" strokeWidth="0.6"/>
             {/* Dorsal fin */}
-            <polygon points="-4,302 10,288 20,302" fill="#e06808" />
-            {/* Pelvic fin */}
-            <polygon points="5,318 18,332 5,332" fill="#e06808" />
-            {/* White stripes — clownfish markings */}
-            <ellipse cx="0" cy="315" rx="30" ry="2.5" fill="#fff" opacity="0.75" />
-            <ellipse cx="12" cy="315" rx="8"  ry="2"   fill="#fff" opacity="0.65" />
+            <path d="M-7,270 C-2,257 9,253 20,269"
+              fill="#d05808" stroke="#9a2800" strokeWidth="0.8"/>
+            {/* Pectoral fin */}
+            <path d="M7,284 C7,292 16,302 10,303 C3,303 2,293 7,284"
+              fill="#c84a00" opacity="0.9"/>
+            {/* White stripe 1 — near head */}
+            <path d="M16,270 C19,270 22,272 22,284 C22,296 19,298 16,298 C13,298 10,296 10,284 C10,272 13,270 16,270Z"
+              fill="#fff" stroke="#2a0a00" strokeWidth="1"/>
+            {/* White stripe 2 — mid body */}
+            <path d="M1,270 C4,270 6,272 6,284 C6,296 4,298 1,298 C-2,298 -5,296 -5,284 C-5,272 -2,270 1,270Z"
+              fill="#fff" stroke="#2a0a00" strokeWidth="1"/>
+            {/* White stripe 3 — near tail */}
+            <path d="M-13,272 C-11,272 -8,274 -8,284 C-8,294 -11,296 -13,296 C-16,296 -19,294 -19,284 C-19,274 -16,272 -13,272Z"
+              fill="#fff" stroke="#2a0a00" strokeWidth="0.9"/>
             {/* Eye */}
-            <circle cx="18" cy="310" r="5"   fill="#fff" />
-            <circle cx="19" cy="309" r="3"   fill="#1a0800" />
-            <circle cx="18" cy="308" r="1.2" fill="#fff" opacity="0.8" />
+            <circle cx="20" cy="279" r="5.5" fill="#fff"/>
+            <circle cx="20" cy="279" r="3.8" fill="#140600"/>
+            <circle cx="18.5" cy="277.5" r="1.8" fill="#fff" opacity="0.9"/>
             {/* Mouth */}
-            <path d="M22 313 Q24 315 22 317" stroke="#c05008" strokeWidth="1.2" fill="none" />
+            <path d="M24,285 Q27,288 24,290" stroke="#9a2800" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
           </g>
 
-          {/* =============================================
-              FISH 2 — blue fish, swims left, y=478
-          ============================================= */}
-          <g className="ocean-fish-2">
-            <ellipse cx="0" cy="478" rx="26" ry="11" fill="#2a7acc" />
-            <polygon points="26,478 48,466 48,490" fill="#1a5eaa" />
-            <polygon points="-4,467 -16,455 -22,467" fill="#1a5eaa" />
-            <polygon points="-5,481 -18,492 -5,492" fill="#1a5eaa" />
-            {/* Scales pattern */}
-            <path d="M-15,474 Q0,470 15,474 Q0,478 -15,474" fill="rgba(100,180,255,0.2)" />
-            {/* Eye */}
-            <circle cx="-14" cy="474" r="4.5" fill="#fff" />
-            <circle cx="-15" cy="473" r="2.5" fill="#050a14" />
-            <circle cx="-16" cy="472" r="1"   fill="#fff" opacity="0.8" />
-            {/* Lateral line */}
-            <path d="M-20,478 Q0,470 20,478" stroke="#6ab4f0" strokeWidth="1.5" fill="none" opacity="0.5" />
-          </g>
-
-          {/* =============================================
-              FISH 3 — yellow, small, swims right, y=618
-          ============================================= */}
-          <g className="ocean-fish-3">
-            <ellipse cx="0" cy="618" rx="20" ry="9" fill="#f0d020" />
-            <polygon points="-20,618 -36,610 -36,626" fill="#d8b810" />
-            <polygon points="-2,609 8,600 15,609" fill="#d8b810" />
-            {/* Stripe */}
-            <line x1="-5" y1="610" x2="-5" y2="626" stroke="#c8a800" strokeWidth="2.5" opacity="0.6" />
-            <circle cx="12" cy="614" r="3.5" fill="#fff" />
-            <circle cx="13" cy="613" r="2"   fill="#0a0a00" />
-            <circle cx="12" cy="612" r="0.8" fill="#fff" opacity="0.8" />
-          </g>
-
-          {/* =============================================
-              SHARK — grey, swims right slow, y=420
-          ============================================= */}
+          {/* ── SHARK — facing right, y=378 ── */}
           <g className="ocean-shark-1">
             {/* Body */}
-            <ellipse cx="0" cy="420" rx="72" ry="20" fill="#607888" />
-            {/* Tail */}
-            <polygon points="-72,420 -106,402 -106,438" fill="#4a6070" />
+            <path d="M82,378 C80,360 56,354 18,354 C-18,354 -58,364 -72,378 C-58,392 -18,402 18,402 C56,402 80,396 82,378Z"
+              fill="url(#sh-g)"/>
+            {/* Tail asymmetric */}
+            <path d="M-72,378 C-83,368 -103,357 -110,352 L-102,364 L-72,378 L-102,392 L-110,404 C-103,399 -83,388 -72,378Z"
+              fill="#4a6070"/>
+            {/* Belly */}
+            <ellipse cx="4" cy="390" rx="58" ry="9" fill="#ccd8de" opacity="0.72"/>
             {/* Dorsal fin */}
-            <polygon points="15,400 38,360 58,400" fill="#506878" />
+            <path d="M14,354 C25,331 46,323 64,354" fill="#507080" stroke="#3e5c6e" strokeWidth="0.8"/>
             {/* Pectoral fin */}
-            <polygon points="-10,428 20,452 -10,452" fill="#4a6070" />
-            {/* Belly */}
-            <ellipse cx="10" cy="426" rx="52" ry="9" fill="#d0dce0" opacity="0.7" />
+            <path d="M-6,378 C4,391 22,404 12,408 C2,408 -8,396 -6,378" fill="#405870"/>
             {/* Snout */}
-            <polygon points="72,420 95,413 95,427" fill="#708898" />
+            <path d="M82,378 C88,372 96,369 98,378 C96,387 88,384 82,378" fill="#7090a0"/>
             {/* Eye */}
-            <circle cx="52" cy="413" r="5.5" fill="#1a1a2a" />
-            <circle cx="50" cy="411" r="2"   fill="#fff" opacity="0.5" />
-            {/* Nostril */}
-            <ellipse cx="68" cy="416" rx="2.5" ry="1.5" fill="#4a5868" />
-            {/* Gill marks */}
-            <path d="M30 410 Q32 420 30 430" stroke="#4a6070" strokeWidth="2"   fill="none" />
-            <path d="M22 410 Q24 420 22 430" stroke="#4a6070" strokeWidth="1.5" fill="none" />
-            <path d="M14 411 Q16 420 14 429" stroke="#4a6070" strokeWidth="1.2" fill="none" />
+            <circle cx="56" cy="368" r="5.5" fill="#18182a"/>
+            <circle cx="54.5" cy="366.5" r="2" fill="#fff" opacity="0.45"/>
+            <ellipse cx="70" cy="374" rx="2.8" ry="1.5" fill="#3a5868"/>
+            {/* Gill slits */}
+            <path d="M30 364 Q33 378 30 392" stroke="#3c5a6a" strokeWidth="2" fill="none"/>
+            <path d="M20 364 Q23 378 20 392" stroke="#3c5a6a" strokeWidth="1.5" fill="none"/>
+            <path d="M10 365 Q13 378 10 391" stroke="#3c5a6a" strokeWidth="1.2" fill="none"/>
           </g>
 
-          {/* =============================================
-              DOLPHIN — jumps near surface, y≈210
-          ============================================= */}
-          <g className="ocean-dolphin-1">
+          {/* ── BLUE FISH (fish 2) — facing left, y=430 ── */}
+          <g className="ocean-fish-2">
+            {/* Tail (on the right, fish faces left) */}
+            <path d="M27,430 C36,422 48,416 52,412 L46,421 L27,430 L46,439 L52,448 C48,444 36,438 27,430Z"
+              fill="#0a5aaa"/>
             {/* Body */}
-            <ellipse cx="680" cy="210" rx="52" ry="14" fill="#4a8aaa" />
-            {/* Dorsal fin */}
-            <polygon points="680,196 700,175 715,196" fill="#3a7a9a" />
-            {/* Tail flukes */}
-            <polygon points="628,210 605,196 605,224" fill="#3a7a9a" />
-            {/* Pectoral fins */}
-            <ellipse cx="660" cy="218" rx="14" ry="6" fill="#3a7a9a" transform="rotate(-20 660 218)" />
-            {/* Belly */}
-            <ellipse cx="670" cy="212" rx="34" ry="6" fill="#c0dce8" opacity="0.6" />
-            {/* Rostrum/beak */}
-            <polygon points="728,210 748,206 748,214" fill="#5a9ab8" />
-            {/* Eye */}
-            <circle cx="722" cy="205" r="5.5" fill="#1a2a3a" />
-            <circle cx="720" cy="203" r="2"   fill="#fff" opacity="0.8" />
-            {/* Smile line */}
-            <path d="M728 211 Q736 214 740 212" stroke="#3a7a9a" strokeWidth="1.5" fill="none" />
+            <path d="M-26,430 C-24,418 -10,415 2,415 C15,415 27,422 27,430 C27,438 15,445 2,445 C-10,445 -24,442 -26,430Z"
+              fill="url(#bf-g)" stroke="#073070" strokeWidth="0.6"/>
+            {/* Dorsal fin (left side, above) */}
+            <path d="M6,415 C2,403 -9,400 -20,415"
+              fill="#0e60b0" stroke="#083880" strokeWidth="0.8"/>
+            {/* Pectoral fin */}
+            <path d="M-7,430 C-7,438 -16,448 -10,450 C-4,450 -2,440 -7,430" fill="#0e58a0" opacity="0.9"/>
+            {/* Yellow stripe horizontal */}
+            <path d="M-18,426 C-10,424 10,424 18,426 L18,434 C10,436 -10,436 -18,434Z"
+              fill="#f0d020" opacity="0.88"/>
+            {/* Eye (left side of body) */}
+            <circle cx="-18" cy="425" r="5.5" fill="#fff"/>
+            <circle cx="-18" cy="425" r="3.8" fill="#060c20"/>
+            <circle cx="-19.5" cy="423.5" r="1.8" fill="#fff" opacity="0.9"/>
+            {/* Lateral line */}
+            <path d="M-22,430 C0,425 0,425 22,430" stroke="#88ccff" strokeWidth="1.2" fill="none" opacity="0.45"/>
+            {/* Mouth */}
+            <path d="M-24,432 Q-27,435 -24,437" stroke="#0a4898" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
           </g>
 
-          {/* =============================================
-              BUBBLES
-          ============================================= */}
-          {[
-            [220,680,5],[380,760,3],[550,600,4],[700,820,3.5],[1060,650,3],
-            [1230,780,4],[1380,720,3],[160,740,2.5],[470,700,3.5],[830,660,2.5],
-          ].map(([x,y,r], i) => (
+          {/* ── YELLOW FISH (fish 3) — facing right, y=556, smaller ── */}
+          <g className="ocean-fish-3">
+            {/* Tail */}
+            <path d="M-17,556 C-23,551 -33,547 -37,543 L-31,550 L-17,556 L-31,562 L-37,569 C-33,565 -23,561 -17,556Z"
+              fill="#c89808"/>
+            {/* Body */}
+            <path d="M20,556 C18,546 7,544 -1,544 C-11,544 -17,549 -17,556 C-17,563 -11,568 -1,568 C7,568 18,566 20,556Z"
+              fill="url(#yf-g)" stroke="#806000" strokeWidth="0.5"/>
+            {/* Dorsal fin */}
+            <path d="M-4,544 C0,536 9,534 16,544" fill="#d0a808" stroke="#906800" strokeWidth="0.7"/>
+            {/* Black vertical stripe */}
+            <path d="M-2,545 C0,545 2,547 2,556 C2,565 0,567 -2,567 C-4,567 -7,565 -7,556 C-7,547 -4,545 -2,545Z"
+              fill="#1a1000"/>
+            {/* Eye */}
+            <circle cx="13" cy="551" r="3.5" fill="#fff"/>
+            <circle cx="13" cy="551" r="2.5" fill="#080400"/>
+            <circle cx="12" cy="550" r="1"   fill="#fff" opacity="0.9"/>
+          </g>
+
+          {/* ── OCTOPUS — y≈545, animated drift ── */}
+          <g className="ocean-octopus-1">
+            {/* Tentacles (8) — tips at y≤740 */}
+            <path d="M900 580 C878 602 860 634 852 672 C844 702 850 720 842 740" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
+            <path d="M900 580 C885 606 876 642 880 678 C884 708 876 724 872 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 580 C898 610 898 646 902 680 C906 710 900 726 898 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 580 C915 604 924 640 920 676 C916 706 924 722 928 740" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M900 580 C922 600 942 634 950 672 C958 702 952 720 960 740" stroke="#6a2880" strokeWidth="8" fill="none" strokeLinecap="round"/>
+            <path d="M892 582 C876 598 864 615 852 628" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            <path d="M900 583 C898 600 895 618 892 632" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            <path d="M908 582 C924 598 934 615 948 628" stroke="#7a3890" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+            {/* Suction cups */}
+            {([
+              [848,670],[843,698],[872,678],[874,706],[899,680],[900,708],[922,676],[930,706],[952,672],[957,702],
+            ] as [number,number][]).map(([cx,cy],i) => (
+              <circle key={i} cx={cx} cy={cy} r="2.5" fill="none" stroke="#b866cc" strokeWidth="1.1" opacity="0.65"/>
+            ))}
+            {/* Head / mantle */}
+            <ellipse cx="900" cy="552" rx="42" ry="30" fill="url(#oct-g)"/>
+            <ellipse cx="895" cy="542" rx="24" ry="13" fill="rgba(200,110,220,0.3)"/>
+            {/* Body */}
+            <ellipse cx="900" cy="580" rx="34" ry="21" fill="#9040b0"/>
+            <ellipse cx="895" cy="574" rx="17" ry="9"  fill="rgba(200,110,220,0.25)"/>
+            {/* Eyes */}
+            <circle cx="882" cy="556" r="8.5" fill="#120820"/>
+            <circle cx="882" cy="556" r="6"   fill="#241038"/>
+            <circle cx="879.5" cy="553.5" r="2.5" fill="#fff" opacity="0.9"/>
+            <ellipse cx="882" cy="557" rx="1.8" ry="2.2" fill="#000"/>
+            <circle cx="918" cy="556" r="8.5" fill="#120820"/>
+            <circle cx="918" cy="556" r="6"   fill="#241038"/>
+            <circle cx="915.5" cy="553.5" r="2.5" fill="#fff" opacity="0.9"/>
+            <ellipse cx="918" cy="557" rx="1.8" ry="2.2" fill="#000"/>
+            {/* Ink cloud */}
+            <ellipse cx="862" cy="570" rx="16" ry="10" fill="#100820" opacity="0.32"/>
+            <ellipse cx="854" cy="563" rx="10" ry="7"  fill="#100820" opacity="0.22"/>
+          </g>
+
+          {/* BUBBLES */}
+          {([
+            [220,540,5],[380,620,3],[550,468,4],[700,680,3.5],[1060,518,3],
+            [1230,640,4],[1380,584,3],[162,610,2.5],[472,570,3.5],[832,532,2.5],
+          ] as [number,number,number][]).map(([x,y,r],i) => (
             <circle key={i} cx={x} cy={y} r={r} fill="none" stroke="#5ab4e8"
               strokeWidth="1.2" opacity="0.4"
-              className={`ocean-bubble ocean-bubble-${(i % 3) + 1}`} />
+              className={`ocean-bubble ocean-bubble-${(i%3)+1}`}/>
           ))}
 
-          {/* =============================================
-              SEAWEED (bottom)
-          ============================================= */}
-          {[160, 340, 580, 760, 1020, 1200, 1390].map((x, i) => (
-            <g key={i} className={`ocean-seaweed ocean-seaweed-${(i % 2) + 1}`}>
-              <path
-                d={`M${x} 900 Q${x-20} 858 ${x} 826 Q${x+20} 796 ${x} 764`}
-                stroke="#1a7a30" strokeWidth="5" fill="none" strokeLinecap="round"
-              />
-              <path
-                d={`M${x} 900 Q${x+16} 856 ${x+6} 824`}
-                stroke="#2a8a40" strokeWidth="4" fill="none" strokeLinecap="round"
-              />
-              {/* Second shorter stalk */}
-              <path
-                d={`M${x+8} 900 Q${x-8} 870 ${x+4} 848 Q${x+16} 828 ${x+8} 808`}
-                stroke="#156828" strokeWidth="3.5" fill="none" strokeLinecap="round"
-              />
+          {/* SEAWEED — bottom at y=730, shifted up 80px */}
+          {[155,330,565,750,1010,1190,1380].map((x,i) => (
+            <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
+              <path d={`M${x} 730 Q${x-20} 688 ${x} 656 Q${x+20} 626 ${x} 594`}
+                stroke="#187228" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+              <path d={`M${x} 730 Q${x+17} 685 ${x+6} 652`}
+                stroke="#269834" strokeWidth="4" fill="none" strokeLinecap="round"/>
+              <path d={`M${x+9} 730 Q${x-8} 698 ${x+4} 674 Q${x+18} 650 ${x+9} 628`}
+                stroke="#125c20" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
             </g>
           ))}
 
-          {/* =============================================
-              STARFISH (rozgwiazdy) — on ocean floor
-          ============================================= */}
-
-          {/* Starfish 1 — red-orange, near left rocks, rotated */}
-          <g transform="translate(310, 875) rotate(15)">
-            <polygon
-              points="0,-20 4,-7 18,-6 7,2 11,16 0,8 -11,16 -7,2 -18,-6 -4,-7"
-              fill="#d84020" stroke="#f05030" strokeWidth="1"
-            />
-            {/* Texture dots */}
-            <circle cx="0"  cy="-12" r="2" fill="#f06040" opacity="0.6"/>
-            <circle cx="7"  cy="8"   r="2" fill="#f06040" opacity="0.6"/>
-            <circle cx="-7" cy="8"   r="2" fill="#f06040" opacity="0.6"/>
-            <circle cx="11" cy="-4"  r="1.5" fill="#f06040" opacity="0.5"/>
-            <circle cx="-11" cy="-4" r="1.5" fill="#f06040" opacity="0.5"/>
-            <circle cx="0"  cy="0"   r="4" fill="#c03018" />
+          {/* STARFISH — shifted up 80px */}
+          <g transform="translate(308,710) rotate(14)">
+            <polygon points="0,-20 4.4,-7 18,-6.4 7,2.2 11,16.4 0,8.2 -11,16.4 -7,2.2 -18,-6.4 -4.4,-7"
+              fill="#d03a18" stroke="#ee5830" strokeWidth="1"/>
+            {[0,-12,7,8,-7,8,11,-3.5,-11,-3.5].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+              <circle key={i} cx={cx} cy={cy} r="2.2" fill="#f06038" opacity="0.6"/>)}
+            <circle cx="0" cy="0" r="4.5" fill="#b02810"/>
+          </g>
+          <g transform="translate(738,716) rotate(-22)">
+            <polygon points="0,-16 3.5,-5.5 14.4,-4.8 5.6,1.6 8.8,12.8 0,6.4 -8.8,12.8 -5.6,1.6 -14.4,-4.8 -3.5,-5.5"
+              fill="#7a2890" stroke="#9a44b0" strokeWidth="1"/>
+            {[0,-9,6,6,-6,6,9,-3,-9,-3].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+              <circle key={i} cx={cx} cy={cy} r="1.8" fill="#b060c8" opacity="0.6"/>)}
+            <circle cx="0" cy="0" r="3.5" fill="#5a1870"/>
+          </g>
+          <g transform="translate(1155,712) rotate(6)">
+            <polygon points="0,-22 4.8,-7.6 20.2,-6.6 7.8,2.4 12.2,17.6 0,9 -12.2,17.6 -7.8,2.4 -20.2,-6.6 -4.8,-7.6"
+              fill="#df5e0e" stroke="#f07e2e" strokeWidth="1"/>
+            {[0,-13,8,9,-8,9,12,-4,-12,-4].reduce((acc,_,idx,arr)=>idx%2===0?[...acc,[arr[idx],arr[idx+1]]]:acc,[] as [number,number][]).map(([cx,cy],i)=>
+              <circle key={i} cx={cx} cy={cy} r="2.5" fill="#f08838" opacity="0.55"/>)}
+            <circle cx="0" cy="0" r="5" fill="#b03c08"/>
+          </g>
+          <g transform="translate(1348,720) rotate(-34)">
+            <polygon points="0,-13 2.8,-4.5 12,-4 4.7,1.5 7.2,10 0,5.2 -7.2,10 -4.7,1.5 -12,-4 -2.8,-4.5"
+              fill="#c83868" stroke="#e85898" strokeWidth="0.8"/>
+            <circle cx="0" cy="0" r="3" fill="#a01e50"/>
           </g>
 
-          {/* Starfish 2 — purple, near centre, tilted */}
-          <g transform="translate(740, 882) rotate(-20)">
-            <polygon
-              points="0,-16 3.2,-5.6 14.4,-4.8 5.6,1.6 8.8,12.8 0,6.4 -8.8,12.8 -5.6,1.6 -14.4,-4.8 -3.2,-5.6"
-              fill="#7a2a90" stroke="#9a40b0" strokeWidth="1"
-            />
-            <circle cx="0"  cy="-9"  r="1.8" fill="#aa50c8" opacity="0.6"/>
-            <circle cx="6"  cy="6"   r="1.8" fill="#aa50c8" opacity="0.6"/>
-            <circle cx="-6" cy="6"   r="1.8" fill="#aa50c8" opacity="0.6"/>
-            <circle cx="9"  cy="-3"  r="1.2" fill="#aa50c8" opacity="0.5"/>
-            <circle cx="-9" cy="-3"  r="1.2" fill="#aa50c8" opacity="0.5"/>
-            <circle cx="0"  cy="0"   r="3.5" fill="#601878" />
-          </g>
-
-          {/* Starfish 3 — orange, near right, flat */}
-          <g transform="translate(1160, 878) rotate(5)">
-            <polygon
-              points="0,-22 4.4,-7.6 20,-6.6 7.8,2.2 12,17.6 0,8.8 -12,17.6 -7.8,2.2 -20,-6.6 -4.4,-7.6"
-              fill="#e06010" stroke="#f08030" strokeWidth="1"
-            />
-            <circle cx="0"   cy="-13" r="2.2" fill="#f09040" opacity="0.6"/>
-            <circle cx="8"   cy="9"   r="2.2" fill="#f09040" opacity="0.6"/>
-            <circle cx="-8"  cy="9"   r="2.2" fill="#f09040" opacity="0.6"/>
-            <circle cx="12"  cy="-4"  r="1.6" fill="#f09040" opacity="0.5"/>
-            <circle cx="-12" cy="-4"  r="1.6" fill="#f09040" opacity="0.5"/>
-            <circle cx="0"   cy="0"   r="4.5" fill="#c04808" />
-          </g>
-
-          {/* Small starfish 4 — pink, near right-far */}
-          <g transform="translate(1350, 886) rotate(-35)">
-            <polygon
-              points="0,-13 2.6,-4.5 12,-4 4.7,1.5 7.2,10 0,5.2 -7.2,10 -4.7,1.5 -12,-4 -2.6,-4.5"
-              fill="#c84070" stroke="#e860a0" strokeWidth="0.8"
-            />
-            <circle cx="0" cy="0" r="3" fill="#a02858" />
-          </g>
-
-          {/* =============================================
-              OCEAN FLOOR (rocks)
-          ============================================= */}
-          <ellipse cx="320"  cy="900" rx="85"  ry="18" fill="#0a2038" />
-          <ellipse cx="320"  cy="896" rx="70"  ry="12" fill="#0c2840" />
-          <ellipse cx="720"  cy="902" rx="130" ry="20" fill="#081828" />
-          <ellipse cx="720"  cy="897" rx="110" ry="13" fill="#0a2030" />
-          <ellipse cx="1150" cy="899" rx="95"  ry="17" fill="#0a2038" />
-          <ellipse cx="1150" cy="895" rx="78"  ry="11" fill="#0c2840" />
-          <ellipse cx="1390" cy="902" rx="72"  ry="16" fill="#081828" />
-          {/* Small pebbles */}
-          <ellipse cx="480"  cy="898" rx="30" ry="8"  fill="#0c2238" />
-          <ellipse cx="900"  cy="900" rx="22" ry="6"  fill="#0a1e30" />
-          <ellipse cx="1020" cy="897" rx="18" ry="5"  fill="#0c2238" />
+          {/* OCEAN FLOOR ROCKS — shifted up 80px */}
+          <ellipse cx="316"  cy="728" rx="90"  ry="16" fill="#08182e"/>
+          <ellipse cx="316"  cy="723" rx="74"  ry="11" fill="#0a2038"/>
+          <ellipse cx="718"  cy="729" rx="135" ry="18" fill="#060f1e"/>
+          <ellipse cx="718"  cy="724" rx="114" ry="12" fill="#081828"/>
+          <ellipse cx="1148" cy="728" rx="100" ry="16" fill="#08182e"/>
+          <ellipse cx="1148" cy="723" rx="82"  ry="11" fill="#0a2038"/>
+          <ellipse cx="1388" cy="729" rx="75"  ry="15" fill="#060f1e"/>
+          <ellipse cx="478"  cy="726" rx="32" ry="8"  fill="#0a1c30"/>
+          <ellipse cx="896"  cy="728" rx="24" ry="6"  fill="#08182a"/>
+          <ellipse cx="1018" cy="726" rx="20" ry="5"  fill="#0a1c30"/>
         </svg>
+
+        {/* ── MOBILE / PORTRAIT (≤639px) ── viewBox 400×860 */}
+        <svg className="statki-bg__mobile"
+          viewBox="0 0 400 860" preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <linearGradient id="m-sky-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#010a18"/>
+              <stop offset="100%" stopColor="#091c35"/>
+            </linearGradient>
+            <linearGradient id="m-ocean-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#0c4a72"/>
+              <stop offset="40%"  stopColor="#083a5e"/>
+              <stop offset="100%" stopColor="#020d1c"/>
+            </linearGradient>
+            <linearGradient id="m-ray-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#5ab4e8" stopOpacity="0.12"/>
+              <stop offset="100%" stopColor="#5ab4e8" stopOpacity="0"/>
+            </linearGradient>
+            <radialGradient id="m-moon-g" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stopColor="#f8e878" stopOpacity="0.32"/>
+              <stop offset="100%" stopColor="#f8e878" stopOpacity="0"/>
+            </radialGradient>
+            <radialGradient id="m-cf-g" cx="28%" cy="32%" r="70%">
+              <stop offset="0%"   stopColor="#ffaa3a"/>
+              <stop offset="55%"  stopColor="#e06812"/>
+              <stop offset="100%" stopColor="#9c3000"/>
+            </radialGradient>
+            <radialGradient id="m-bf-g" cx="65%" cy="32%" r="68%">
+              <stop offset="0%"   stopColor="#66c8ff"/>
+              <stop offset="55%"  stopColor="#1880e2"/>
+              <stop offset="100%" stopColor="#073578"/>
+            </radialGradient>
+            <radialGradient id="m-oct-g" cx="40%" cy="35%" r="65%">
+              <stop offset="0%"   stopColor="#c060d8"/>
+              <stop offset="60%"  stopColor="#8030a0"/>
+              <stop offset="100%" stopColor="#500870"/>
+            </radialGradient>
+            <radialGradient id="m-sand-g" cx="50%" cy="30%" r="60%">
+              <stop offset="0%"   stopColor="#f0cc68"/>
+              <stop offset="100%" stopColor="#a87020"/>
+            </radialGradient>
+            <linearGradient id="m-palm-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#7a5028"/>
+              <stop offset="100%" stopColor="#4e2c0c"/>
+            </linearGradient>
+          </defs>
+
+          {/* Sky */}
+          <rect width="400" height="200" fill="url(#m-sky-g)"/>
+
+          {/* Moon */}
+          <ellipse cx="68" cy="62" rx="64" ry="64" fill="url(#m-moon-g)"/>
+          <circle  cx="68" cy="62" r="28" fill="#f8f0bc"/>
+          <circle  cx="80" cy="55" r="24" fill="#091c35"/>
+          <circle cx="57" cy="68" r="3.5" fill="rgba(200,175,90,0.28)"/>
+          <circle cx="66" cy="52" r="2"   fill="rgba(200,175,90,0.22)"/>
+
+          {/* Stars */}
+          {([
+            [150,18,1.5],[220,10,2],[290,22,1.2],[340,8,1.8],[380,28,1.3],
+            [175,40,1],[255,35,1.5],[310,46,1.2],[120,30,1.3],[370,15,1],
+            [200,50,1.2],[265,15,1.8],[340,38,1],[130,48,1.4],
+          ] as [number,number,number][]).map(([x,y,r],i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill="#fff" opacity={0.38+(i%4)*0.14}/>
+          ))}
+
+          {/* Island top-right (portrait, smaller) */}
+          <ellipse cx="352" cy="182" rx="60" ry="11" fill="#8a5a18" opacity="0.5"/>
+          <ellipse cx="352" cy="178" rx="58" ry="12" fill="url(#m-sand-g)"/>
+          <ellipse cx="334" cy="167" rx="44" ry="16" fill="#1e5410"/>
+          <ellipse cx="358" cy="169" rx="30" ry="12" fill="#2a6c18"/>
+          {/* Palm trunk */}
+          <path d="M340 176 C338 162 334 148 332 134 C330 120 332 108 333 96"
+            stroke="url(#m-palm-g)" strokeWidth="7" fill="none" strokeLinecap="round"/>
+          {/* Palm leaves */}
+          <path d="M333 96 C318 88 302 91 288 101" stroke="#186014" strokeWidth="8" fill="none" strokeLinecap="round"/>
+          <path d="M333 96 C322 80 318 64 326 50"  stroke="#156010" strokeWidth="7" fill="none" strokeLinecap="round"/>
+          <path d="M333 96 C348 80 362 74 372 80"  stroke="#1a6414" strokeWidth="7" fill="none" strokeLinecap="round"/>
+          <path d="M333 96 C346 90 358 94 368 104" stroke="#1e6818" strokeWidth="8" fill="none" strokeLinecap="round"/>
+          <path d="M333 96 C322 102 308 110 296 120" stroke="#175c12" strokeWidth="6" fill="none" strokeLinecap="round"/>
+          {/* Coconuts */}
+          <circle cx="326" cy="103" r="5.5" fill="#5c2c08"/>
+          <circle cx="334" cy="107" r="5"   fill="#6a3410"/>
+
+          {/* Water surface */}
+          <path d="M0 200 Q50 192 100 200 Q150 208 200 200 Q250 192 300 200 Q350 208 400 200
+                   L400 212 Q350 220 300 212 Q250 204 200 212 Q150 220 100 212 Q50 204 0 212 Z"
+            fill="#1878aa" opacity="0.65"/>
+          <path d="M0 208 Q200 200 400 208" stroke="#8ad4f0" strokeWidth="1.5" fill="none" opacity="0.32"/>
+
+          {/* Ocean */}
+          <rect y="200" width="400" height="660" fill="url(#m-ocean-g)"/>
+
+          {/* Light rays */}
+          <polygon points="200,200 120,860 280,860" fill="url(#m-ray-g)"/>
+          <polygon points="320,200 260,860 380,860" fill="url(#m-ray-g)"/>
+
+          {/* ── MOBILE CLOWNFISH — facing right, y=340 ── */}
+          <g className="ocean-fish-1m">
+            <path d="M-18,340 C-25,334 -35,329 -38,326 L-33,333 L-18,340 L-33,347 L-38,354 C-35,351 -25,346 -18,340Z"
+              fill="#b04008"/>
+            <path d="M20,340 C18,330 9,328 1,328 C-9,328 -18,333 -18,340 C-18,347 -9,352 1,352 C9,352 18,350 20,340Z"
+              fill="url(#m-cf-g)" stroke="#7a2400" strokeWidth="0.6"/>
+            <path d="M-4,328 C-1,320 7,318 15,328" fill="#d05808" stroke="#9a2800" strokeWidth="0.7"/>
+            <path d="M12,340 C12,347 19,355 14,356 C8,356 7,347 12,340" fill="#c84a00" opacity="0.9"/>
+            <path d="M11,329 C13,329 16,331 16,340 C16,349 13,351 11,351 C8,351 6,349 6,340 C6,331 8,329 11,329Z"
+              fill="#fff" stroke="#2a0a00" strokeWidth="0.9"/>
+            <path d="M0,329 C2,329 4,331 4,340 C4,349 2,351 0,351 C-2,351 -4,349 -4,340 C-4,331 -2,329 0,329Z"
+              fill="#fff" stroke="#2a0a00" strokeWidth="0.9"/>
+            <circle cx="15" cy="335" r="4.5" fill="#fff"/>
+            <circle cx="15" cy="335" r="3.2" fill="#140600"/>
+            <circle cx="13.8" cy="333.8" r="1.4" fill="#fff" opacity="0.9"/>
+          </g>
+
+          {/* ── MOBILE BLUE FISH — facing left, y=490 ── */}
+          <g className="ocean-fish-2m">
+            <path d="M20,490 C27,483 37,477 41,474 L35,482 L20,490 L35,498 L41,506 C37,502 27,497 20,490Z"
+              fill="#0a5aaa"/>
+            <path d="M-20,490 C-18,480 -8,477 2,477 C12,477 20,483 20,490 C20,497 12,503 2,503 C-8,503 -18,500 -20,490Z"
+              fill="url(#m-bf-g)" stroke="#073070" strokeWidth="0.6"/>
+            <path d="M4,477 C1,468 -7,466 -16,477" fill="#0e60b0" stroke="#083880" strokeWidth="0.7"/>
+            <path d="M-12,486 C-6,484 8,484 14,486 L14,494 C8,496 -6,496 -12,494Z"
+              fill="#f0d020" opacity="0.85"/>
+            <circle cx="-14" cy="485" r="4.5" fill="#fff"/>
+            <circle cx="-14" cy="485" r="3.2" fill="#060c20"/>
+            <circle cx="-15.5" cy="483.5" r="1.4" fill="#fff" opacity="0.9"/>
+          </g>
+
+          {/* ── MOBILE OCTOPUS — centered at (200,690) ── */}
+          <g className="ocean-octopus-1m">
+            <path d="M200 720 C182 740 168 768 162 796 C156 816 162 830 155 845" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M200 720 C188 744 182 774 185 800 C188 820 181 834 178 845" stroke="#6a2880" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <path d="M200 720 C198 746 198 776 200 802 C202 822 198 836 197 845" stroke="#6a2880" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <path d="M200 720 C212 742 218 774 215 800 C212 820 218 834 222 845" stroke="#6a2880" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <path d="M200 720 C220 738 234 768 240 796 C246 816 240 830 246 845" stroke="#6a2880" strokeWidth="7" fill="none" strokeLinecap="round"/>
+            <path d="M193 722 C180 736 170 751 160 762" stroke="#7a3890" strokeWidth="5" fill="none" strokeLinecap="round"/>
+            <path d="M200 722 C198 738 196 754 194 766" stroke="#7a3890" strokeWidth="5" fill="none" strokeLinecap="round"/>
+            <path d="M207 722 C220 736 230 751 240 762" stroke="#7a3890" strokeWidth="5" fill="none" strokeLinecap="round"/>
+            <ellipse cx="200" cy="694" rx="38" ry="27" fill="url(#m-oct-g)"/>
+            <ellipse cx="196" cy="685" rx="21" ry="12" fill="rgba(200,110,220,0.3)"/>
+            <ellipse cx="200" cy="720" rx="30" ry="19" fill="#9040b0"/>
+            <circle cx="184" cy="698" r="7.5" fill="#120820"/>
+            <circle cx="184" cy="698" r="5.2" fill="#241038"/>
+            <circle cx="182" cy="696" r="2.2" fill="#fff" opacity="0.9"/>
+            <ellipse cx="184" cy="699" rx="1.6" ry="2" fill="#000"/>
+            <circle cx="216" cy="698" r="7.5" fill="#120820"/>
+            <circle cx="216" cy="698" r="5.2" fill="#241038"/>
+            <circle cx="214" cy="696" r="2.2" fill="#fff" opacity="0.9"/>
+            <ellipse cx="216" cy="699" rx="1.6" ry="2" fill="#000"/>
+          </g>
+
+          {/* Mobile bubbles */}
+          {([
+            [80,600,4],[160,680,3],[240,540,3.5],[320,720,3],[360,620,2.5],
+          ] as [number,number,number][]).map(([x,y,r],i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill="none" stroke="#5ab4e8"
+              strokeWidth="1.2" opacity="0.4"
+              className={`ocean-bubble ocean-bubble-${(i%3)+1}`}/>
+          ))}
+
+          {/* Mobile seaweed */}
+          {[60,150,240,330].map((x,i) => (
+            <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
+              <path d={`M${x} 860 Q${x-16} 826 ${x} 800 Q${x+16} 774 ${x} 748`}
+                stroke="#187228" strokeWidth="5" fill="none" strokeLinecap="round"/>
+              <path d={`M${x} 860 Q${x+13} 824 ${x+5} 798`}
+                stroke="#269834" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+            </g>
+          ))}
+
+          {/* Mobile starfish */}
+          <g transform="translate(114,834) rotate(18)">
+            <polygon points="0,-16 3.5,-5.5 14.4,-4.8 5.6,1.6 8.8,12.8 0,6.4 -8.8,12.8 -5.6,1.6 -14.4,-4.8 -3.5,-5.5"
+              fill="#d03a18" stroke="#ee5830" strokeWidth="1"/>
+            <circle cx="0" cy="0" r="4" fill="#b02810"/>
+          </g>
+          <g transform="translate(295,840) rotate(-20)">
+            <polygon points="0,-14 3.1,-4.8 12.6,-4.2 4.9,1.4 7.7,11.2 0,5.6 -7.7,11.2 -4.9,1.4 -12.6,-4.2 -3.1,-4.8"
+              fill="#7a2890" stroke="#9a44b0" strokeWidth="1"/>
+            <circle cx="0" cy="0" r="3.2" fill="#5a1870"/>
+          </g>
+
+          {/* Mobile ocean floor */}
+          <ellipse cx="100" cy="858" rx="90"  ry="14" fill="#08182e"/>
+          <ellipse cx="290" cy="860" rx="120" ry="16" fill="#060f1e"/>
+          <ellipse cx="370" cy="858" rx="50"  ry="12" fill="#08182e"/>
+        </svg>
+
       </div>
       <div className="statki-content">
         <Outlet />

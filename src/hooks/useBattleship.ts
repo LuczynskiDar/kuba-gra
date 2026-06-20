@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import type { ShipDef, BoardGrid, Difficulty } from '../types/statki'
 import { getShipCells, makeInitialFleet, randomPlaceFleet } from '../utils/battleshipUtils'
 
-export type ShotState = 'none' | 'miss' | 'hit' | 'sunk'
+export type ShotState = 'none' | 'miss' | 'hit' | 'sunk' | 'border'
 export type ShotGrid = ShotState[][]
 
 export interface LastShot {
@@ -55,6 +55,17 @@ function processShot(
     const cells = getShipCells(ship.startRow, ship.startCol, ship.size, ship.orientation)
     if (cells.every(([r, c]) => newShots[r][c] === 'hit')) {
       cells.forEach(([r, c]) => { newShots[r][c] = 'sunk' })
+      // Mark surrounding border zone — ships can't be adjacent
+      for (const [r, c] of cells) {
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            const nr = r + dr, nc = c + dc
+            if (nr >= 0 && nr <= 9 && nc >= 0 && nc <= 9 && newShots[nr][nc] === 'none') {
+              newShots[nr][nc] = 'border'
+            }
+          }
+        }
+      }
       return { newShots, result: 'sunk' }
     }
   }
