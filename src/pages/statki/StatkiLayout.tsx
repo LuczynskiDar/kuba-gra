@@ -1,7 +1,15 @@
 import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
 import './StatkiLayout.css'
 
 export default function StatkiLayout() {
+  useEffect(() => {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
+    const prev = link?.href ?? ''
+    if (link) link.href = '/favicon-statki.svg'
+    return () => { if (link) link.href = prev }
+  }, [])
+
   return (
     <div className="statki-layout">
       <div className="statki-bg" aria-hidden="true">
@@ -155,6 +163,43 @@ export default function StatkiLayout() {
           <polygon points="480,165 320,810 640,810"  fill="url(#ray-g)"/>
           <polygon points="780,165 640,810 920,810"  fill="url(#ray-g)"/>
           <polygon points="1100,165 940,810 1260,810" fill="url(#ray-g)"/>
+
+          {/* ── JELLYFISH — drifts right to left, bell pulses, mid-water y≈315 ── */}
+          <g className="ocean-jelly-1">
+            <g className="ocean-jelly-1__bell">
+              {/* Bell dome */}
+              <path d="M -30 320 Q -32 284 0 282 Q 32 284 30 320 Q 18 326 0 324 Q -18 326 -30 320 Z"
+                fill="rgba(215,125,245,0.28)" stroke="rgba(235,160,255,0.62)" strokeWidth="1.6"/>
+              {/* Frilly rim */}
+              <path d="M -30 320 Q -22 330 -14 323 Q -6 330 0 323 Q 6 330 14 323 Q 22 330 30 320"
+                fill="rgba(215,125,245,0.18)" stroke="rgba(230,155,255,0.5)" strokeWidth="1.2"/>
+              {/* Inner organs — two horseshoe shapes */}
+              <path d="M -13 306 Q -13 295 -7 295 Q -1 295 -1 306 Q -1 314 -7 314 Q -13 314 -13 306 Z"
+                fill="none" stroke="rgba(225,140,250,0.55)" strokeWidth="1.4"/>
+              <path d="M 1 306 Q 1 295 7 295 Q 13 295 13 306 Q 13 314 7 314 Q 1 314 1 306 Z"
+                fill="none" stroke="rgba(225,140,250,0.55)" strokeWidth="1.4"/>
+            </g>
+            {/* Oral arms — 4 medium wavy */}
+            <path d="M -10 324 Q -17 348 -10 370 Q -3 390 -11 412"
+              stroke="rgba(210,125,240,0.55)" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+            <path d="M -3 325 Q -6 352 -2 376 Q 2 396 -2 418"
+              stroke="rgba(200,115,230,0.5)" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            <path d="M 3 325 Q 6 350 2 374 Q -2 394 2 416"
+              stroke="rgba(210,125,240,0.5)" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            <path d="M 10 324 Q 17 346 10 368 Q 3 388 11 410"
+              stroke="rgba(200,115,230,0.55)" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+            {/* Long thin tentacles */}
+            <path d="M -23 321 Q -29 364 -21 404 Q -13 440 -21 468"
+              stroke="rgba(195,110,225,0.38)" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+            <path d="M -13 322 Q -17 368 -11 408 Q -5 442 -13 472"
+              stroke="rgba(185,100,215,0.3)" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+            <path d="M 0 326 Q 2 374 0 414 Q -2 448 0 478"
+              stroke="rgba(195,110,225,0.35)" strokeWidth="1" fill="none" strokeLinecap="round"/>
+            <path d="M 13 322 Q 17 366 11 406 Q 5 440 13 470"
+              stroke="rgba(185,100,215,0.3)" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+            <path d="M 23 321 Q 29 362 21 402 Q 13 438 21 466"
+              stroke="rgba(195,110,225,0.38)" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+          </g>
 
           {/* ── DOLPHIN — jumping near surface ── */}
           <g className="ocean-dolphin-1">
@@ -322,20 +367,33 @@ export default function StatkiLayout() {
           {/* OCEAN FLOOR — atmospheric gradient, fades in from y=570 */}
           <rect x="0" y="570" width="1440" height="240" fill="url(#floor-g)"/>
 
-          {/* OCEAN FLOOR BASE — solid full-width strip so seaweed is grounded */}
-          <rect x="0" y="600" width="1440" height="210" fill="#0a1810"/>
+          {/* SEAWEED — drawn BEFORE ground base so roots are buried under it.
+              Each plant: root deep at y=638, tops at varying heights. */}
+          {([
+            [155, 455], [330, 502], [565, 462], [750, 530],
+            [1010, 474], [1190, 492], [1380, 518],
+          ] as [number,number][]).map(([x, top], i) => {
+            const root = 638
+            const h    = root - top
+            const m1   = root - h * 0.32
+            const m2   = root - h * 0.66
+            return (
+              <g key={i} className={`ocean-seaweed ocean-seaweed-${(i % 2) + 1}`}>
+                {/* main stem — S-curve */}
+                <path d={`M${x} ${root} Q${x-22} ${m1} ${x} ${(m1+m2)/2} Q${x+22} ${m2} ${x} ${top}`}
+                  stroke="#187228" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+                {/* short side shoot */}
+                <path d={`M${x} ${root} Q${x+18} ${root-h*0.38} ${x+7} ${root-h*0.6}`}
+                  stroke="#269834" strokeWidth="4" fill="none" strokeLinecap="round"/>
+                {/* thin back strand */}
+                <path d={`M${x+8} ${root} Q${x-10} ${root-h*0.34} ${x+3} ${root-h*0.58} Q${x+20} ${root-h*0.76} ${x+8} ${top+h*0.14}`}
+                  stroke="#125c20" strokeWidth="3" fill="none" strokeLinecap="round"/>
+              </g>
+            )
+          })}
 
-          {/* SEAWEED — roots at y=615, tops at ~y=480 */}
-          {[155,330,565,750,1010,1190,1380].map((x,i) => (
-            <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
-              <path d={`M${x} 615 Q${x-20} 580 ${x} 552 Q${x+20} 524 ${x} 496`}
-                stroke="#187228" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
-              <path d={`M${x} 615 Q${x+17} 576 ${x+6} 546`}
-                stroke="#269834" strokeWidth="4" fill="none" strokeLinecap="round"/>
-              <path d={`M${x+9} 615 Q${x-8} 586 ${x+4} 562 Q${x+18} 538 ${x+9} 514`}
-                stroke="#125c20" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-            </g>
-          ))}
+          {/* OCEAN FLOOR BASE — drawn AFTER seaweed so it buries the roots */}
+          <rect x="0" y="600" width="1440" height="210" fill="#0a1810"/>
 
           {/* STARFISH — on the floor at y≈604 */}
           <g transform="translate(308,604) rotate(14)">
@@ -376,6 +434,57 @@ export default function StatkiLayout() {
           <ellipse cx="478"  cy="618" rx="34"  ry="9"  fill="#1c3222"/>
           <ellipse cx="896"  cy="620" rx="26"  ry="7"  fill="#1a3024"/>
           <ellipse cx="1018" cy="618" rx="22"  ry="6"  fill="#1c3222"/>
+
+          {/* SHELLS — decorative on the ocean floor */}
+          {/* Conch shell */}
+          <g transform="translate(200,610) rotate(-12)">
+            <ellipse cx="0" cy="-3" rx="13" ry="9" fill="#c89858" stroke="#886028" strokeWidth="1"/>
+            <ellipse cx="2" cy="-3" rx="7" ry="5" fill="#dab870" stroke="#886028" strokeWidth="0.7"/>
+            <circle cx="5" cy="-4" r="2.5" fill="#a07030"/>
+            <path d="M8,-9 Q12,-17 9,-21" stroke="#906028" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            <path d="M-13,-3 Q-15,4 -9,8 Q-3,10 3,7" fill="#e8c080" stroke="#886028" strokeWidth="0.8"/>
+          </g>
+          {/* Clam / scallop shell */}
+          <g transform="translate(560,607) rotate(8)">
+            <path d="M-14,4 Q0,14 14,4" fill="#d4b070" stroke="#a07840" strokeWidth="0.9"/>
+            <path d="M-14,4 Q-15,-10 0,-12 Q15,-10 14,4" fill="#e8c888" stroke="#a07840" strokeWidth="0.9"/>
+            <line x1="0" y1="-12" x2="0" y2="10" stroke="#a07840" strokeWidth="0.6" opacity="0.5"/>
+            <line x1="0" y1="-12" x2="-9" y2="9" stroke="#a07840" strokeWidth="0.5" opacity="0.45"/>
+            <line x1="0" y1="-12" x2="9" y2="9" stroke="#a07840" strokeWidth="0.5" opacity="0.45"/>
+            <line x1="0" y1="-12" x2="-13" y2="3" stroke="#a07840" strokeWidth="0.5" opacity="0.35"/>
+            <line x1="0" y1="-12" x2="13" y2="3" stroke="#a07840" strokeWidth="0.5" opacity="0.35"/>
+            <circle cx="0" cy="-12" r="2" fill="#907030"/>
+          </g>
+          {/* Small spiral shell */}
+          <g transform="translate(1050,612) rotate(18)">
+            <ellipse cx="0" cy="0" rx="9" ry="6.5" fill="#b89858" stroke="#806030" strokeWidth="0.8"/>
+            <ellipse cx="2" cy="0" rx="5" ry="3.5" fill="#ccaa60" stroke="#806030" strokeWidth="0.6"/>
+            <circle cx="4" cy="-1" r="1.8" fill="#906828"/>
+            <path d="M7,-3 Q10,-9 8,-12" stroke="#806030" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+          </g>
+
+          {/* SNAIL — walks right→left, head leads (left), shell trails (right) */}
+          <g className="ocean-snail-1">
+            {/* Shell (right side — trails behind) */}
+            <ellipse cx="0" cy="601" rx="13" ry="9" fill="#c89858" stroke="#886028" strokeWidth="1.1"/>
+            <ellipse cx="2" cy="601" rx="7" ry="5" fill="#dab870" stroke="#886028" strokeWidth="0.8"/>
+            <circle cx="5" cy="600" r="2.5" fill="#a07030"/>
+            {/* Spire */}
+            <path d="M8,595 Q12,588 9,583" stroke="#906028" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            {/* Lip (opens to the left toward body) */}
+            <path d="M-13,601 Q-15,607 -9,610 Q-3,612 3,609" fill="#e8c080" stroke="#886028" strokeWidth="0.8"/>
+            {/* Body — foot + head + eyestalks (left side, leads the way), retracts into shell periodically */}
+            <g className="ocean-snail-1__body">
+              <path d="M-2,609 Q-20,613 -40,611 Q-46,611 -50,609 Q-46,607 -40,607 Q-20,609 -2,609Z"
+                fill="#7a9848" stroke="#4a6828" strokeWidth="0.7"/>
+              <ellipse cx="-44" cy="605" rx="8" ry="5" fill="#8aaa50" stroke="#4a6828" strokeWidth="0.8"/>
+              <path d="M-48,603 Q-50,597 -50,593" stroke="#4a6828" strokeWidth="1.3" fill="none" strokeLinecap="round"/>
+              <circle cx="-50" cy="592" r="2.2" fill="#1a1010"/>
+              <path d="M-42,602 Q-42,596 -40,593" stroke="#4a6828" strokeWidth="1.3" fill="none" strokeLinecap="round"/>
+              <circle cx="-40" cy="592" r="2.2" fill="#1a1010"/>
+              <path d="M-47,607 Q-44,609 -41,607" stroke="#4a6828" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+            </g>
+          </g>
         </svg>
 
         {/* ── MOBILE / PORTRAIT (≤639px) ── viewBox 400×860 */}
@@ -475,6 +584,30 @@ export default function StatkiLayout() {
           <polygon points="200,200 120,860 280,860" fill="url(#m-ray-g)"/>
           <polygon points="320,200 260,860 380,860" fill="url(#m-ray-g)"/>
 
+          {/* ── MOBILE JELLYFISH — drifts right to left, bell at y≈420 ── */}
+          <g className="ocean-jelly-1m">
+            <g className="ocean-jelly-1__bell">
+              <path d="M -22 426 Q -24 400 0 398 Q 24 400 22 426 Q 14 432 0 430 Q -14 432 -22 426 Z"
+                fill="rgba(215,125,245,0.28)" stroke="rgba(235,160,255,0.62)" strokeWidth="1.5"/>
+              <path d="M -22 426 Q -15 434 -8 428 Q 0 434 8 428 Q 15 434 22 426"
+                fill="rgba(215,125,245,0.16)" stroke="rgba(230,155,255,0.48)" strokeWidth="1.1"/>
+              <path d="M -9 413 Q -9 404 -4 404 Q 1 404 1 413 Q 1 420 -4 420 Q -9 420 -9 413 Z"
+                fill="none" stroke="rgba(225,140,250,0.55)" strokeWidth="1.3"/>
+              <path d="M 1 413 Q 1 404 6 404 Q 11 404 11 413 Q 11 420 6 420 Q 1 420 1 413 Z"
+                fill="none" stroke="rgba(225,140,250,0.55)" strokeWidth="1.3"/>
+            </g>
+            <path d="M -7 430 Q -13 452 -7 472 Q -1 490 -9 508"
+              stroke="rgba(210,125,240,0.55)" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            <path d="M 0 431 Q 2 456 0 478 Q -2 496 0 514"
+              stroke="rgba(200,115,230,0.5)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M 7 430 Q 13 450 7 470 Q 1 488 9 506"
+              stroke="rgba(210,125,240,0.5)" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            <path d="M -18 428 Q -22 462 -16 494 Q -10 522 -18 548"
+              stroke="rgba(195,110,225,0.36)" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+            <path d="M 18 428 Q 22 460 16 492 Q 10 520 18 546"
+              stroke="rgba(195,110,225,0.36)" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+          </g>
+
           {/* ── MOBILE CLOWNFISH — facing right, y=340 ── */}
           <g className="ocean-fish-1m">
             <path d="M-18,340 C-25,334 -35,329 -38,326 L-33,333 L-18,340 L-33,347 L-38,354 C-35,351 -25,346 -18,340Z"
@@ -538,18 +671,26 @@ export default function StatkiLayout() {
               className={`ocean-bubble ocean-bubble-${(i%3)+1}`}/>
           ))}
 
-          {/* Mobile floor base — full-width so seaweed is grounded */}
-          <rect x="0" y="838" width="400" height="22" fill="#0a1810"/>
+          {/* Mobile seaweed — drawn BEFORE floor base so roots are buried */}
+          {([
+            [60, 748], [150, 768], [240, 754], [330, 774],
+          ] as [number,number][]).map(([x, top], i) => {
+            const root = 856
+            const h    = root - top
+            const m1   = root - h * 0.32
+            const m2   = root - h * 0.66
+            return (
+              <g key={i} className={`ocean-seaweed ocean-seaweed-${(i % 2) + 1}`}>
+                <path d={`M${x} ${root} Q${x-16} ${m1} ${x} ${(m1+m2)/2} Q${x+16} ${m2} ${x} ${top}`}
+                  stroke="#187228" strokeWidth="5" fill="none" strokeLinecap="round"/>
+                <path d={`M${x} ${root} Q${x+13} ${root-h*0.4} ${x+5} ${root-h*0.62}`}
+                  stroke="#269834" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+              </g>
+            )
+          })}
 
-          {/* Mobile seaweed */}
-          {[60,150,240,330].map((x,i) => (
-            <g key={i} className={`ocean-seaweed ocean-seaweed-${(i%2)+1}`}>
-              <path d={`M${x} 860 Q${x-16} 826 ${x} 800 Q${x+16} 774 ${x} 748`}
-                stroke="#187228" strokeWidth="5" fill="none" strokeLinecap="round"/>
-              <path d={`M${x} 860 Q${x+13} 824 ${x+5} 798`}
-                stroke="#269834" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-            </g>
-          ))}
+          {/* Mobile floor base — drawn AFTER seaweed to bury the roots */}
+          <rect x="0" y="838" width="400" height="22" fill="#0a1810"/>
 
           {/* Mobile starfish */}
           <g transform="translate(114,834) rotate(18)">
@@ -567,6 +708,54 @@ export default function StatkiLayout() {
           <ellipse cx="100" cy="858" rx="90"  ry="14" fill="#1a3024"/>
           <ellipse cx="290" cy="860" rx="120" ry="16" fill="#182c20"/>
           <ellipse cx="370" cy="858" rx="50"  ry="12" fill="#1a3024"/>
+
+          {/* MOBILE SHELLS */}
+          {/* Conch shell */}
+          <g transform="translate(70,836) rotate(-15)">
+            <ellipse cx="0" cy="-2" rx="10" ry="7" fill="#c89858" stroke="#886028" strokeWidth="0.9"/>
+            <ellipse cx="2" cy="-2" rx="5" ry="3.5" fill="#dab870" stroke="#886028" strokeWidth="0.6"/>
+            <circle cx="4" cy="-3" r="2" fill="#a07030"/>
+            <path d="M7,-7 Q9,-13 7,-16" stroke="#906028" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            <path d="M-10,-2 Q-12,3 -7,6 Q-2,8 2,5" fill="#e8c080" stroke="#886028" strokeWidth="0.7"/>
+          </g>
+          {/* Clam shell */}
+          <g transform="translate(200,834) rotate(6)">
+            <path d="M-11,3 Q0,11 11,3" fill="#d4b070" stroke="#a07840" strokeWidth="0.8"/>
+            <path d="M-11,3 Q-12,-7 0,-9 Q12,-7 11,3" fill="#e8c888" stroke="#a07840" strokeWidth="0.8"/>
+            <line x1="0" y1="-9" x2="0" y2="8" stroke="#a07840" strokeWidth="0.5" opacity="0.5"/>
+            <line x1="0" y1="-9" x2="-7" y2="7" stroke="#a07840" strokeWidth="0.4" opacity="0.4"/>
+            <line x1="0" y1="-9" x2="7" y2="7" stroke="#a07840" strokeWidth="0.4" opacity="0.4"/>
+            <circle cx="0" cy="-9" r="1.5" fill="#907030"/>
+          </g>
+          {/* Small spiral shell */}
+          <g transform="translate(325,838) rotate(22)">
+            <ellipse cx="0" cy="0" rx="7" ry="5" fill="#b89858" stroke="#806030" strokeWidth="0.7"/>
+            <ellipse cx="1" cy="0" rx="4" ry="2.5" fill="#ccaa60" stroke="#806030" strokeWidth="0.5"/>
+            <circle cx="3" cy="-1" r="1.4" fill="#906828"/>
+            <path d="M5,-2 Q7,-7 6,-10" stroke="#806030" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+          </g>
+
+          {/* MOBILE SNAIL — walks right→left, head leads (left), shell trails (right) */}
+          <g className="ocean-snail-1m">
+            {/* Shell (right side) */}
+            <ellipse cx="0" cy="836" rx="10" ry="7" fill="#c89858" stroke="#886028" strokeWidth="0.9"/>
+            <ellipse cx="1" cy="836" rx="5.5" ry="4" fill="#dab870" stroke="#886028" strokeWidth="0.6"/>
+            <circle cx="4" cy="835" r="2" fill="#a07030"/>
+            {/* Spire */}
+            <path d="M6,830 Q9,825 7,821" stroke="#906028" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            {/* Lip (opens to the left toward body) */}
+            <path d="M-10,836 Q-12,841 -7,844 Q-2,846 2,843" fill="#e8c080" stroke="#886028" strokeWidth="0.7"/>
+            {/* Body (left side — leads the way) */}
+            <g className="ocean-snail-1m__body">
+              <path d="M-2,843 Q-15,847 -32,845 Q-36,845 -38,843 Q-36,841 -32,841 Q-15,843 -2,843Z"
+                fill="#7a9848" stroke="#4a6828" strokeWidth="0.6"/>
+              <ellipse cx="-33" cy="840" rx="6" ry="4" fill="#8aaa50" stroke="#4a6828" strokeWidth="0.7"/>
+              <path d="M-36,838 Q-38,833 -38,830" stroke="#4a6828" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+              <circle cx="-38" cy="829" r="1.8" fill="#1a1010"/>
+              <path d="M-31,837 Q-31,832 -30,829" stroke="#4a6828" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+              <circle cx="-30" cy="828" r="1.8" fill="#1a1010"/>
+            </g>
+          </g>
         </svg>
 
       </div>

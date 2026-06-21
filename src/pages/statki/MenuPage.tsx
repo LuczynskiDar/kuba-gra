@@ -27,6 +27,9 @@ export default function StatkiMenuPage() {
         <button className="statki-btn-primary" onClick={() => navigate('/statki/mode')}>
           Zagraj
         </button>
+        <button className="statki-btn-secondary" onClick={() => navigate('/statki/results')}>
+          Tabela wyników
+        </button>
         <button className="statki-btn-back" onClick={() => navigate('/')}>
           ← Menu główne
         </button>
