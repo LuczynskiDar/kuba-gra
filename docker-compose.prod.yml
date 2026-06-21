@@ -1,0 +1,21 @@
+services:
+  kuba-gra:
+    image: rayzki/kuba-gra:1.0
+    container_name: gry
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    image: rayzki/kuba-gra-backend:1.0
+    container_name: backend
+    restart: unless-stopped
+    volumes:
+      - backend-data:/app/data
+    expose:
+      - "3001"
+
+volumes:
+  backend-data:
