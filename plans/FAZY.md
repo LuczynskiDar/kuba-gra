@@ -145,18 +145,31 @@
 
 ---
 
-## Faza 8 — Warstwa 3: 2 graczy online (kod dołączenia) ⏳ DO ZROBIENIA
+## Faza 8 — Warstwa 3: 2 graczy online (kod dołączenia) ✅ GOTOWE
 
-- Socket.io dodany do backendu
-- Generowanie kodu pokoju (4-5 znaków)
-- UI: "Utwórz grę" → wyświetl kod / "Dołącz do gry" → wpisz kod
-- Synchronizacja strzałów w czasie rzeczywistym
-- Obsługa rozłączenia gracza
-- Nginx proxy: `/socket.io/*` → backend
+**Co zrobiono:**
+- Socket.io dodany do `backend/server.js` (http.createServer + Socket.io Server)
+- Generowanie 8-znakowego kodu pokoju (bez mylących znaków: bez O/0/I/1)
+- `OnlineLobbyPage.tsx` + `.css` — tworzenie i dołączanie do pokoju, spinner oczekiwania, wyświetlanie kodu
+- `OnlineGamePage.tsx` — gra w czasie rzeczywistym bez handovera (każdy gra na swoim urządzeniu)
+- Synchronizacja strzałów: `fire` → `incoming-fire` → `fire-result` → `fire-confirmed`
+- Zasada kolejnych strzałów (trafienie = strzelasz dalej, pudło = zmiana tury)
+- Obsługa rozłączenia: `opponent-disconnected` / `opponent-reconnected`
+- Nginx proxy: `/socket.io/` → backend (WebSocket upgrade)
+- Vite dev proxy: `/socket.io` z `ws: true`
+- `SummaryPage.tsx` — wynik zapisywany tylko ze strony zwycięzcy (`isOnlineWinner`)
+- `socket.ts` — singleton połączenia Socket.io
+
+**Kluczowe pliki:**
+- `backend/server.js` (Socket.io rooms)
+- `src/socket.ts`
+- `src/pages/statki/OnlineLobbyPage.tsx` + `.css`
+- `src/pages/statki/OnlineGamePage.tsx`
+- `nginx.conf` + `vite.config.ts`
 
 ---
 
-## Faza 9 — Testy i deploy ⏳ DO ZROBIENIA
+## Faza 9 — Testy i deploy ℹ️ MANUALNIE
 
 - Testy lokalne wszystkich trybów i gier
 - Weryfikacja docker-compose (wszystkie serwisy)
@@ -176,5 +189,5 @@
 | 5 | Bitwa Statków: wygląd, tło oceaniczne, animacje | ✅ Gotowe |
 | 6 | Backend, SQLite, wyniki, Docker | ✅ Gotowe |
 | 7 | 2 graczy na tym samym ekranie | ✅ Gotowe |
-| 8 | 2 graczy online (WebSocket, kod pokoju) | ⏳ Do zrobienia |
-| 9 | Testy i deploy na VPS | ⏳ Do zrobienia |
+| 8 | 2 graczy online (WebSocket, kod pokoju) | ✅ Gotowe |
+| 9 | Testy i deploy na VPS | ℹ️ Manualnie |
