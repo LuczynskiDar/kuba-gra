@@ -79,7 +79,7 @@ export default function OnlineGamePage() {
       setMyShots(updatedShots)
       setLastMyShot({ row, col, result })
       setPendingFire(false)
-      // Sunk count updated via separate useEffect on myShots
+      if (result === 'sunk') setOpponentSunkCount(prev => prev + 1)
       if (gameOver) {
         setStatus('won')
       } else if (!yourTurn) {
@@ -110,11 +110,8 @@ export default function OnlineGamePage() {
     }
   }, []) // eslint-disable-line
 
-  // Track my sunk count from opponentShots
+  // Track how many of my ships are sunk (from opponentShots)
   useEffect(() => {
-    const sunk = opponentShots.flat().filter(s => s === 'sunk').length
-    // Each sunk ship contributes its size; we just show sunk ship count
-    // Use fleet to compute properly
     const sunkShips = myFleetRef.current.filter(ship => {
       if (ship.startRow === null || ship.startCol === null) return false
       const size = ship.size
