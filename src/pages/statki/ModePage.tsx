@@ -30,6 +30,8 @@ export default function StatkiModePage() {
     setMode(m)
     if (m === 'computer') {
       setStep('difficulty')
+    } else if (m === '2players-online') {
+      navigate('/statki/online')
     } else {
       setStep('names')
     }
@@ -61,10 +63,9 @@ export default function StatkiModePage() {
               <span className="statki-mode__btn-icon">👥</span>
               <span className="statki-mode__btn-label">2 Graczy<br/><small>ten sam ekran</small></span>
             </button>
-            <button className="statki-mode__btn statki-mode__btn--disabled" disabled>
+            <button className="statki-mode__btn" onClick={() => selectMode('2players-online')}>
               <span className="statki-mode__btn-icon">🌐</span>
               <span className="statki-mode__btn-label">2 Graczy<br/><small>przez internet</small></span>
-              <span className="statki-mode__badge">Wkrótce</span>
             </button>
           </div>
           <button className="statki-btn-back" onClick={() => navigate('/statki')}>← Wróć</button>

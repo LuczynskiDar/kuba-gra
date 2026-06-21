@@ -32,17 +32,19 @@ export default function StatkiSummaryPage() {
     player1: string; player2: string; winner: string
     playerShots: number; playerAccuracy: number
     computerShots: number; computerAccuracy: number
+    isOnlineWinner?: boolean  // online mode: true only on winner's device
   }
 
-  const playerWon = s.winner === s.player1
-  const apiMode   = s.mode === 'computer' ? 'solo' : 'multiplayer'
+  const playerWon    = s.winner === s.player1
+  const apiMode      = s.mode === 'computer' ? 'solo' : 'multiplayer'
+  const shouldSave   = s.mode !== '2players-online' || s.isOnlineWinner === true
 
   const [rows, setRows]         = useState<ResultRow[]>([])
   const [dbError, setDbError]   = useState(false)
   const savedRef                = useRef(false)
 
   useEffect(() => {
-    if (savedRef.current || !s.player1) return
+    if (savedRef.current || !s.player1 || !shouldSave) return
     savedRef.current = true
 
     // Solo: save player1's result (W or L)

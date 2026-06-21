@@ -11,6 +11,8 @@ import StatkiModePage from './pages/statki/ModePage'
 import StatkiSetupPage from './pages/statki/SetupPage'
 import StatkiGamePage from './pages/statki/GamePage'
 import StatkiSummaryPage from './pages/statki/SummaryPage'
+import OnlineLobbyPage from './pages/statki/OnlineLobbyPage'
+import OnlineGamePage from './pages/statki/OnlineGamePage'
 import './App.css'
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
         <Route path="/statki/mode" element={<StatkiModePage />} />
         <Route path="/statki/setup" element={<StatkiSetupPage />} />
         <Route path="/statki/game" element={<StatkiGamePage />} />
+        <Route path="/statki/online" element={<OnlineLobbyPage />} />
+        <Route path="/statki/online/game" element={<OnlineGamePage />} />
         <Route path="/statki/summary" element={<StatkiSummaryPage />} />
       </Route>
     </Routes>

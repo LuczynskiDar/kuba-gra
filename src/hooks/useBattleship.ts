@@ -1,15 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import type { ShipDef, BoardGrid, Difficulty, GameMode } from '../types/statki'
-import { getShipCells, makeInitialFleet, randomPlaceFleet } from '../utils/battleshipUtils'
+import {
+  getShipCells, makeInitialFleet, randomPlaceFleet,
+  createEmptyShotGrid, processShot, isAllSunk,
+} from '../utils/battleshipUtils'
 
-export type ShotState = 'none' | 'miss' | 'hit' | 'sunk' | 'border'
-export type ShotGrid = ShotState[][]
-
-export interface LastShot {
-  row: number
-  col: number
-  result: 'miss' | 'hit' | 'sunk'
-}
+// Re-export so existing importers (GameBoard.tsx) keep working
+export type { ShotState, ShotGrid, LastShot } from '../utils/battleshipUtils'
 
 export interface BattleshipState {
   playerBoard: BoardGrid
@@ -28,55 +25,6 @@ interface AiState {
   mode: 'hunt' | 'target'
   targets: [number, number][]
   pendingHits: [number, number][]
-}
-
-function createEmptyShotGrid(): ShotGrid {
-  return Array.from({ length: 10 }, () => Array(10).fill('none'))
-}
-
-function processShot(
-  targetBoard: BoardGrid,
-  fleet: ShipDef[],
-  shotsGrid: ShotGrid,
-  row: number,
-  col: number
-): { newShots: ShotGrid; result: 'miss' | 'hit' | 'sunk' } {
-  const shipId = targetBoard[row][col]
-  const newShots = shotsGrid.map(r => [...r]) as ShotGrid
-
-  if (!shipId) {
-    newShots[row][col] = 'miss'
-    return { newShots, result: 'miss' }
-  }
-
-  newShots[row][col] = 'hit'
-  const ship = fleet.find(s => s.id === shipId)
-  if (ship && ship.startRow !== null && ship.startCol !== null) {
-    const cells = getShipCells(ship.startRow, ship.startCol, ship.size, ship.orientation)
-    if (cells.every(([r, c]) => newShots[r][c] === 'hit')) {
-      cells.forEach(([r, c]) => { newShots[r][c] = 'sunk' })
-      for (const [r, c] of cells) {
-        for (let dr = -1; dr <= 1; dr++) {
-          for (let dc = -1; dc <= 1; dc++) {
-            const nr = r + dr, nc = c + dc
-            if (nr >= 0 && nr <= 9 && nc >= 0 && nc <= 9 && newShots[nr][nc] === 'none') {
-              newShots[nr][nc] = 'border'
-            }
-          }
-        }
-      }
-      return { newShots, result: 'sunk' }
-    }
-  }
-  return { newShots, result: 'hit' }
-}
-
-function isAllSunk(fleet: ShipDef[], shots: ShotGrid): boolean {
-  return fleet.every(ship => {
-    if (ship.startRow === null || ship.startCol === null) return true
-    return getShipCells(ship.startRow, ship.startCol, ship.size, ship.orientation)
-      .every(([r, c]) => shots[r][c] === 'sunk')
-  })
 }
 
 function countSunk(fleet: ShipDef[], shots: ShotGrid): number {

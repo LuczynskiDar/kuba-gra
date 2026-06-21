@@ -132,12 +132,16 @@
 
 ---
 
-## Faza 7 — Warstwa 2: 2 graczy na tym samym ekranie ⏳ DO ZROBIENIA
+## Faza 7 — Warstwa 2: 2 graczy na tym samym ekranie ✅ GOTOWE
 
-- Każdy gracz ustawia statki osobno (ekran przekazania urządzenia)
-- Ekran zasłonięcia planszy między turami
-- Logika naprzemiennych tur między graczami
-- Wizualne rozróżnienie plansz
+**Co zrobiono:**
+- `SetupPage.tsx` — fazy 'player1' → 'handover' → 'player2' bez nawigacji (wewnętrzny stan)
+- `HandoverScreen.tsx` + `.css` — overlay z odliczaniem 3-2-1, potem przycisk „Gotowy →", renderowany przez `createPortal` poza drzewem stacking context
+- Tryb 2 graczy: osobne ustawianie floty dla każdego gracza z ekranem przekazania urządzenia
+- `useBattleship.ts` — generyczna zasada kolejnych strzałów: trafienie = strzelaj dalej, pudło = zmiana tury; `player2Fire` callback dla P2
+- `GamePage.tsx` — `activeViewer` state oddzielony od `state.turn`, plansze obracają się dopiero po potwierdzeniu handover; po pudłe pojawia się przycisk „Przekaż urządzenie →", kliknięcie uruchamia HandoverScreen
+- `GameBoard.tsx` + `.css` — prop `variant="blue"|"red"`, czerwona kolorystyka dla P2/komputera (zmieniony kolor tła komórek)
+- `SummaryPage.tsx` — w trybie multiplayer zapisuje tylko zwycięzcę (wynik 'W') z info o przeciwniku
 
 ---
 
@@ -171,6 +175,6 @@
 | 4 | Bitwa Statków: logika gry, AI 3 poziomy, vs Komputer | ✅ Gotowe |
 | 5 | Bitwa Statków: wygląd, tło oceaniczne, animacje | ✅ Gotowe |
 | 6 | Backend, SQLite, wyniki, Docker | ✅ Gotowe |
-| 7 | 2 graczy na tym samym ekranie | ⏳ Do zrobienia |
+| 7 | 2 graczy na tym samym ekranie | ✅ Gotowe |
 | 8 | 2 graczy online (WebSocket, kod pokoju) | ⏳ Do zrobienia |
 | 9 | Testy i deploy na VPS | ⏳ Do zrobienia |
