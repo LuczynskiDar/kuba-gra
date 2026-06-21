@@ -1,6 +1,6 @@
 services:
   kuba-gra:
-    image: rayzki/kuba-gra:1.0
+    image: rayzki/kuba-gra:2.0
     container_name: gry
     restart: unless-stopped
     ports:
@@ -9,7 +9,7 @@ services:
       - backend
 
   backend:
-    image: rayzki/kuba-gra-backend:1.0
+    image: rayzki/kuba-gra-backend:2.0
     container_name: backend
     restart: unless-stopped
     volumes:
