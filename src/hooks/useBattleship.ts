@@ -4,9 +4,10 @@ import {
   getShipCells, makeInitialFleet, randomPlaceFleet,
   createEmptyShotGrid, processShot, isAllSunk,
 } from '../utils/battleshipUtils'
+import type { ShotState, ShotGrid, LastShot } from '../utils/battleshipUtils'
 
 // Re-export so existing importers (GameBoard.tsx) keep working
-export type { ShotState, ShotGrid, LastShot } from '../utils/battleshipUtils'
+export type { ShotState, ShotGrid, LastShot }
 
 export interface BattleshipState {
   playerBoard: BoardGrid

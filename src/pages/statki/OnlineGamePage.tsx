@@ -79,9 +79,7 @@ export default function OnlineGamePage() {
       setMyShots(updatedShots)
       setLastMyShot({ row, col, result })
       setPendingFire(false)
-      // Count sunk ships (cells with 'sunk' that match fleet size)
-      const sunkCells = updatedShots.flat().filter(s => s === 'sunk').length
-      setOpponentSunkCount(Math.floor(sunkCells / 1)) // approximate — exact count via fleet not available
+      // Sunk count updated via separate useEffect on myShots
       if (gameOver) {
         setStatus('won')
       } else if (!yourTurn) {

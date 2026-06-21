@@ -27,7 +27,13 @@ export default function StatkiSetupPage() {
   const isOnline = mode === '2players-online'
   const [waitingOnline, setWaitingOnline] = useState(false)
 
-  // Online mode: listen for game-start
+  // Phase: player1 → handover → player2 (only for 2players-local)
+  const [phase, setPhase]     = useState<SetupPhase>('player1')
+  const [fleet, setFleet]     = useState<ShipDef[]>(makeInitialFleet)
+  const [board, setBoard]     = useState<BoardGrid>(createEmptyBoard)
+  const [hoverCell, setHoverCell] = useState<{ row: number; col: number } | null>(null)
+
+  // Online mode: listen for game-start (must be after fleet/board declarations)
   useEffect(() => {
     if (!isOnline) return
     const socket = getSocket()
@@ -46,12 +52,6 @@ export default function StatkiSetupPage() {
     })
     return () => { socket.off('game-start') }
   }, [fleet, board]) // eslint-disable-line
-
-  // Phase: player1 → handover → player2 (only for 2players-local)
-  const [phase, setPhase]     = useState<SetupPhase>('player1')
-  const [fleet, setFleet]     = useState<ShipDef[]>(makeInitialFleet)
-  const [board, setBoard]     = useState<BoardGrid>(createEmptyBoard)
-  const [hoverCell, setHoverCell] = useState<{ row: number; col: number } | null>(null)
 
   // Saved player 1 data for 2-player mode
   const p1FleetRef = useRef<ShipDef[]>([])

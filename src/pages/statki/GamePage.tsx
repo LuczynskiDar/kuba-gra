@@ -94,8 +94,8 @@ export default function StatkiGamePage() {
   useEffect(() => {
     if (state.status === 'playing') return
     const timer = setTimeout(() => {
-      const pShots = state.playerShots.flat()
-      const cShots = state.computerShots.flat()
+      const pShots = state.playerShots.flat() as string[]
+      const cShots = state.computerShots.flat() as string[]
       const pFired = pShots.filter(s => s === 'miss' || s === 'hit' || s === 'sunk').length
       const pHits  = pShots.filter(s => s === 'hit'  || s === 'sunk').length
       const cFired = cShots.filter(s => s === 'miss' || s === 'hit' || s === 'sunk').length
